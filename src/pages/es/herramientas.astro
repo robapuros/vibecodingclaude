@@ -1,0 +1,229 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Cómo configurar Claude para vibe coding',
+  description: t.tools.metaDescription,
+  inLanguage: 'es',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Elegir un plan de Claude',
+      text: 'Selecciona entre Free, Pro o Max según tus necesidades',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Instalar Node.js',
+      text: 'Descarga e instala Node.js 18 o superior',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Instalar Claude Code',
+      text: 'Ejecuta npm install -g @anthropic-ai/claude-code',
+    },
+  ],
+};
+---
+
+<ContentLayout
+  title={`${t.tools.title} | ${t.siteTitle}`}
+  description={t.tools.metaDescription}
+  lang={lang}
+  currentPath="tools"
+  structuredData={structuredData}
+>
+  <h1>Herramientas y Configuración</h1>
+  <p class="lead">{t.tools.description}</p>
+
+  <nav class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a href="#planes">Planes de Claude</a></li>
+      <li><a href="#opciones">Opciones para Programar</a></li>
+      <li><a href="#instalacion">Instalación de Claude Code</a></li>
+      <li><a href="#configuracion">Configuración Recomendada</a></li>
+    </ul>
+  </nav>
+
+  <section id="planes">
+    <h2>Planes de Claude</h2>
+
+    <p>Anthropic ofrece varios planes según tus necesidades. Aquí tienes un resumen honesto:</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Precio</th>
+            <th>Características</th>
+            <th>Recomendado para</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Free</strong></td>
+            <td>$0</td>
+            <td>Mensajes limitados, Claude 3.5 Sonnet</td>
+            <td>Probar, tareas simples</td>
+          </tr>
+          <tr class="highlighted">
+            <td><strong>Pro</strong></td>
+            <td>$20/mes</td>
+            <td>5x más uso, Claude 3.5 Opus, prioridad</td>
+            <td>Uso regular, proyectos serios</td>
+          </tr>
+          <tr>
+            <td><strong>Max</strong></td>
+            <td>$100/mes</td>
+            <td>20x más uso, máxima prioridad</td>
+            <td>Uso profesional intensivo</td>
+          </tr>
+          <tr>
+            <td><strong>Team</strong></td>
+            <td>$25/usuario/mes</td>
+            <td>Colaboración, admin controls</td>
+            <td>Equipos</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td>Personalizado</td>
+            <td>SSO, seguridad avanzada</td>
+            <td>Empresas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Nuestra recomendación:</strong> Para vibe coding recomendamos <strong>Claude Pro</strong> - es el balance perfecto entre capacidad y precio. El plan gratuito tiene límites que pueden frustrarte en medio de un proyecto.</p>
+    </div>
+  </section>
+
+  <section id="opciones">
+    <h2>Opciones para Programar</h2>
+
+    <h3>Opción A: Claude.ai (Web)</h3>
+    <p>La forma más simple de empezar. Solo necesitas un navegador.</p>
+    <ul>
+      <li><strong>Ventajas:</strong> Sin instalación, funciona en cualquier dispositivo</li>
+      <li><strong>Desventajas:</strong> Copiar/pegar código manualmente</li>
+      <li><strong>Ideal para:</strong> Preguntas rápidas, aprender conceptos</li>
+    </ul>
+
+    <h3>Opción B: Claude Code (CLI) - RECOMENDADA</h3>
+    <p>La herramienta oficial de línea de comandos de Anthropic. Es la mejor experiencia para vibe coding.</p>
+    <ul>
+      <li><strong>Ventajas:</strong> Integración directa con tu sistema de archivos, puede leer y escribir código automáticamente</li>
+      <li><strong>Desventajas:</strong> Requiere instalación básica</li>
+      <li><strong>Ideal para:</strong> Proyectos reales, la experiencia completa de vibe coding</li>
+    </ul>
+
+    <h3>Opción C: Claude en tu IDE</h3>
+    <p>Extensiones para VS Code y otros editores que integran Claude.</p>
+    <ul>
+      <li><strong>Cursor:</strong> Editor con Claude integrado</li>
+      <li><strong>Extensiones de VS Code:</strong> Varias opciones disponibles</li>
+      <li><strong>Ideal para:</strong> Programadores que ya usan un IDE específico</li>
+    </ul>
+  </section>
+
+  <section id="instalacion">
+    <h2>Instalación de Claude Code</h2>
+
+    <h3>Requisitos</h3>
+    <ul>
+      <li><strong>Node.js 18 o superior</strong> - <a href="https://nodejs.org" target="_blank" rel="noopener">Descargar de nodejs.org</a></li>
+      <li><strong>Terminal:</strong> Windows Terminal, iTerm2 (Mac), o la terminal de tu sistema</li>
+    </ul>
+
+    <h3>Paso 1: Instalar Node.js</h3>
+    <p>Si no tienes Node.js, descárgalo e instálalo desde <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>. Elige la versión LTS.</p>
+
+    <p>Verifica la instalación:</p>
+    <CodeBlock code="node --version" language="bash" filename="Terminal" />
+
+    <h3>Paso 2: Instalar Claude Code</h3>
+    <p>Abre tu terminal y ejecuta:</p>
+    <CodeBlock code="npm install -g @anthropic-ai/claude-code" language="bash" filename="Terminal" />
+
+    <p>En Mac con Homebrew también puedes usar:</p>
+    <CodeBlock code="brew install claude-code" language="bash" filename="Terminal" />
+
+    <h3>Paso 3: Verificar instalación</h3>
+    <CodeBlock code="claude --version" language="bash" filename="Terminal" />
+
+    <h3>Paso 4: Primer uso</h3>
+    <p>Simplemente escribe <code>claude</code> en tu terminal:</p>
+    <CodeBlock code="claude" language="bash" filename="Terminal" />
+
+    <p>La primera vez te pedirá iniciar sesión con tu cuenta de Anthropic. Sigue las instrucciones en pantalla.</p>
+
+    <div class="callout callout-success">
+      <p><strong>¡Listo!</strong> Ya puedes empezar a hacer vibe coding. Ve a la carpeta de tu proyecto y escribe <code>claude</code> para empezar.</p>
+    </div>
+  </section>
+
+  <section id="configuracion">
+    <h2>Configuración Recomendada</h2>
+
+    <h3>Terminal</h3>
+    <ul>
+      <li><strong>Windows:</strong> Windows Terminal (viene con Windows 11, descargable para Windows 10)</li>
+      <li><strong>Mac:</strong> iTerm2 o la Terminal nativa</li>
+      <li><strong>Linux:</strong> Tu terminal favorita</li>
+    </ul>
+
+    <h3>Editor (Opcional)</h3>
+    <p>Aunque Claude Code puede crear y editar archivos, es útil tener un editor para revisar el código:</p>
+    <ul>
+      <li><strong>VS Code</strong> - Gratuito y muy popular</li>
+      <li><strong>Cursor</strong> - VS Code con IA integrada</li>
+    </ul>
+
+    <h3>Control de versiones</h3>
+    <p><strong>Git</strong> es esencial para cualquier proyecto. Te permite:</p>
+    <ul>
+      <li>Guardar versiones de tu código</li>
+      <li>Deshacer cambios si algo sale mal</li>
+      <li>Colaborar con otros</li>
+    </ul>
+
+    <div class="next-section">
+      <a href="/es/primera-app" class="btn btn-primary btn-large">
+        Siguiente: Tu Primera App →
+      </a>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .table-container {
+    overflow-x: auto;
+    margin: var(--space-lg) 0;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  tr.highlighted {
+    background-color: rgba(99, 102, 241, 0.1);
+  }
+
+  tr.highlighted td {
+    border-color: var(--color-primary);
+  }
+
+  .next-section {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,209 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations, getLocalizedPath } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  currentPath?: string;
+}
+
+const { lang, currentPath = '' } = Astro.props;
+const t = useTranslations(lang);
+
+const navItems = [
+  { label: t.nav.home, path: '' },
+  { label: t.nav.guide, path: 'guide' },
+  { label: t.nav.tools, path: 'tools' },
+  { label: t.nav.firstApp, path: 'first-app' },
+  { label: t.nav.prompts, path: 'prompts' },
+];
+
+const alternateLang = lang === 'es' ? 'en' : 'es';
+const alternateUrl = getLocalizedPath(currentPath, alternateLang);
+---
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href={`/${lang}`} class="nav-logo">
+      <span class="logo-text">Vibe Coding</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+
+    <div class="nav-menu">
+      <ul class="nav-links">
+        {navItems.map((item) => {
+          const href = getLocalizedPath(item.path, lang);
+          const isActive = currentPath === item.path || (currentPath === '' && item.path === '');
+          return (
+            <li>
+              <a href={href} class:list={['nav-link', { active: isActive }]}>
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+
+      <a href={alternateUrl} class="lang-switch" title={alternateLang === 'es' ? 'Ver en Español' : 'View in English'}>
+        {alternateLang.toUpperCase()}
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width-wide);
+    margin: 0 auto;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .nav-logo {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .logo-text {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+  }
+
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text);
+    position: relative;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text);
+    left: 0;
+  }
+
+  .hamburger::before {
+    top: -8px;
+  }
+
+  .hamburger::after {
+    top: 8px;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-lg);
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-primary);
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .lang-switch:hover {
+    background-color: var(--color-border);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: block;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-lg);
+      gap: var(--space-lg);
+    }
+
+    .nav-menu.open {
+      display: flex;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .nav-link {
+      display: block;
+      padding: var(--space-sm) 0;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.querySelector('.nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', (!expanded).toString());
+    menu?.classList.toggle('open');
+  });
+</script>

@@ -1,0 +1,112 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  currentPath?: string;
+  structuredData?: object;
+}
+
+const { title, description, lang, currentPath = '', structuredData } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  currentPath={currentPath}
+  structuredData={structuredData}
+>
+  <article class="content">
+    <div class="container">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .content {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  .content :global(h1) {
+    margin-bottom: var(--space-md);
+  }
+
+  .content :global(.lead) {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .content :global(.toc) {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .content :global(.toc h2) {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .content :global(.toc ul) {
+    margin: 0;
+    padding-left: var(--space-lg);
+  }
+
+  .content :global(.toc li) {
+    margin-bottom: var(--space-xs);
+  }
+
+  .content :global(.callout) {
+    background-color: var(--color-bg-secondary);
+    border-left: 4px solid var(--color-primary);
+    padding: var(--space-lg);
+    margin: var(--space-lg) 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .content :global(.callout-warning) {
+    border-left-color: #f59e0b;
+  }
+
+  .content :global(.callout-success) {
+    border-left-color: #10b981;
+  }
+
+  .content :global(.comparison) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin: var(--space-lg) 0;
+  }
+
+  .content :global(.comparison > div) {
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+  }
+
+  .content :global(.comparison .bad) {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+
+  .content :global(.comparison .good) {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  @media (max-width: 768px) {
+    .content :global(.comparison) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

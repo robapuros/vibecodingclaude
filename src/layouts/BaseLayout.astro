@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  currentPath?: string;
+  noindex?: boolean;
+  structuredData?: object;
+  showNav?: boolean;
+  showFooter?: boolean;
+}
+
+const {
+  title,
+  description,
+  lang,
+  currentPath = '',
+  noindex = false,
+  structuredData,
+  showNav = true,
+  showFooter = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <SEOHead
+    title={title}
+    description={description}
+    lang={lang}
+    noindex={noindex}
+    structuredData={structuredData}
+  />
+  <body>
+    {showNav && <Navigation lang={lang} currentPath={currentPath} />}
+    <main>
+      <slot />
+    </main>
+    {showFooter && <Footer lang={lang} />}
+  </body>
+</html>

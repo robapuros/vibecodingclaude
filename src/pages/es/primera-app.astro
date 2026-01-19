@@ -1,0 +1,307 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Crea tu primera app con vibe coding',
+  description: t.firstApp.metaDescription,
+  inLanguage: 'es',
+  totalTime: 'PT30M',
+  tool: [
+    { '@type': 'HowToTool', name: 'Claude Code' },
+    { '@type': 'HowToTool', name: 'Node.js' },
+  ],
+};
+
+const prompt1 = `You are a senior frontend engineer and SEO specialist.
+
+We are building a bilingual (Spanish + English) static website using Astro.
+
+Domain: vibecodingclaude.com
+
+Project goal: Create an educational website about "Vibe Coding with Claude",
+focused primarily on Spanish-speaking users, but also available in English.
+
+SEO goals:
+- Spanish pages should rank for "vibe coding", "vibe coding con claude",
+  and "programar con IA"
+- English pages should target "vibe coding", "coding with Claude",
+  and "AI-assisted programming"
+
+Site structure:
+- Root (/) → language selector
+- /es/ → Spanish content
+- /en/ → English content
+
+Core use case: A beginner arrives, selects language, and follows a step-by-step
+guide from zero knowledge to building their first simple app using Claude.
+
+Technical constraints:
+- Astro static site
+- SEO-first (semantic HTML, fast load)
+- No backend
+- Clean, minimal design
+- Markdown-friendly content
+
+Pages per language:
+- Landing page
+- Main guide
+- Tools & setup
+- First app tutorial
+- Prompts & tips
+
+Output: Propose the full Astro project structure and implementation plan.`;
+
+const prompt2 = `I want you to create the content for the webpage, from 0 to vibe coding,
+with installation tips, explanation of different Claude plans, and for the
+creation of the first project use this project - give the prompts needed
+to recreate this project from 0.`;
+
+const prompt3 = `Proceed with the implementation. Start with the project setup and core
+components, then create all pages with full content.`;
+---
+
+<ContentLayout
+  title={`${t.firstApp.title} | ${t.siteTitle}`}
+  description={t.firstApp.metaDescription}
+  lang={lang}
+  currentPath="first-app"
+  structuredData={structuredData}
+>
+  <h1>Tu Primera App con Vibe Coding</h1>
+  <p class="lead">{t.firstApp.description}</p>
+
+  <div class="callout">
+    <p><strong>Proyecto META:</strong> La mejor forma de aprender vibe coding es haciéndolo. En este tutorial, vamos a crear <em>esta misma web</em> que estás leyendo. Así verás exactamente los prompts y el proceso que usamos.</p>
+  </div>
+
+  <nav class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a href="#introduccion">Introducción</a></li>
+      <li><a href="#preparacion">Preparación</a></li>
+      <li><a href="#prompt-1">Prompt 1: Definición del Proyecto</a></li>
+      <li><a href="#prompt-2">Prompt 2: Contenido</a></li>
+      <li><a href="#prompt-3">Prompt 3: Implementación</a></li>
+      <li><a href="#iteracion">Iteración y Refinamiento</a></li>
+      <li><a href="#aprendizajes">Lo que Aprenderás</a></li>
+    </ul>
+  </nav>
+
+  <section id="introduccion">
+    <h2>Introducción</h2>
+
+    <p>En este tutorial vamos a crear un sitio web estático bilingüe con Astro. No es un proyecto trivial - tiene:</p>
+
+    <ul>
+      <li>Soporte para español e inglés</li>
+      <li>SEO completo (meta tags, hreflang, structured data)</li>
+      <li>Múltiples páginas con contenido real</li>
+      <li>Diseño responsivo y limpio</li>
+    </ul>
+
+    <p>Y lo haremos principalmente con <strong>3 prompts</strong>. Esa es la magia del vibe coding.</p>
+  </section>
+
+  <section id="preparacion">
+    <h2>Preparación</h2>
+
+    <p>Antes de empezar, asegúrate de tener:</p>
+
+    <ol>
+      <li><strong>Claude Code instalado</strong> - Si no lo tienes, sigue la <a href="/es/herramientas">guía de instalación</a></li>
+      <li><strong>Una carpeta vacía</strong> para tu proyecto</li>
+    </ol>
+
+    <h3>Crear la carpeta del proyecto</h3>
+
+    <CodeBlock
+      code={`mkdir vibecodingclaude
+cd vibecodingclaude`}
+      language="bash"
+      filename="Terminal"
+    />
+
+    <h3>Iniciar Claude Code</h3>
+
+    <CodeBlock
+      code="claude"
+      language="bash"
+      filename="Terminal"
+    />
+
+    <p>Ahora estás en la interfaz de Claude Code, listo para enviar tu primer prompt.</p>
+  </section>
+
+  <section id="prompt-1">
+    <h2>Prompt 1: Definición del Proyecto</h2>
+
+    <p>Este es el prompt más importante. Aquí defines <em>todo</em> lo que quieres construir. Sé específico.</p>
+
+    <CodeBlock
+      code={prompt1}
+      language="text"
+      filename="Prompt 1 - Copia y pega esto"
+    />
+
+    <h3>¿Por qué funciona este prompt?</h3>
+
+    <ul>
+      <li><strong>Rol claro:</strong> "You are a senior frontend engineer and SEO specialist" establece el contexto</li>
+      <li><strong>Objetivo específico:</strong> Describimos exactamente qué queremos construir</li>
+      <li><strong>Restricciones técnicas:</strong> Astro, estático, sin backend - Claude sabe los límites</li>
+      <li><strong>Estructura definida:</strong> Listamos las páginas que necesitamos</li>
+      <li><strong>Output esperado:</strong> Pedimos un plan primero, no código directamente</li>
+    </ul>
+
+    <div class="callout callout-warning">
+      <p><strong>Importante:</strong> Claude te propondrá un plan. <strong>Lee el plan completo</strong> antes de aprobar. Si algo no te convence, pide cambios ahora.</p>
+    </div>
+  </section>
+
+  <section id="prompt-2">
+    <h2>Prompt 2: Contenido</h2>
+
+    <p>Una vez que el plan está aprobado, pedimos el contenido real de las páginas:</p>
+
+    <CodeBlock
+      code={prompt2}
+      language="text"
+      filename="Prompt 2"
+    />
+
+    <h3>¿Por qué este prompt separado?</h3>
+
+    <p>Dividir en pasos tiene ventajas:</p>
+
+    <ul>
+      <li>Puedes revisar el contenido antes de implementar</li>
+      <li>Es más fácil pedir cambios específicos</li>
+      <li>Claude mantiene el contexto del proyecto</li>
+    </ul>
+  </section>
+
+  <section id="prompt-3">
+    <h2>Prompt 3: Implementación</h2>
+
+    <p>Finalmente, pedimos que implemente todo:</p>
+
+    <CodeBlock
+      code={prompt3}
+      language="text"
+      filename="Prompt 3"
+    />
+
+    <p>Claude comenzará a crear los archivos. Verás en tu terminal cómo crea cada componente, página y estilo.</p>
+  </section>
+
+  <section id="iteracion">
+    <h2>Iteración y Refinamiento</h2>
+
+    <p>Es normal que la primera versión no sea perfecta. Aquí es donde el vibe coding brilla - puedes pedir cambios en lenguaje natural:</p>
+
+    <h3>Ejemplos de prompts de refinamiento</h3>
+
+    <CodeBlock
+      code={`Cambia el color principal de azul a morado.`}
+      language="text"
+      filename="Ejemplo de refinamiento"
+    />
+
+    <CodeBlock
+      code={`Añade una sección de FAQ al final de la página de herramientas.`}
+      language="text"
+      filename="Ejemplo de refinamiento"
+    />
+
+    <CodeBlock
+      code={`El botón de navegación móvil no funciona. ¿Puedes revisarlo?`}
+      language="text"
+      filename="Ejemplo de bug fix"
+    />
+
+    <h3>Probar localmente</h3>
+
+    <p>Para ver tu sitio en el navegador:</p>
+
+    <CodeBlock
+      code={`npm install
+npm run dev`}
+      language="bash"
+      filename="Terminal"
+    />
+
+    <p>Abre <code>http://localhost:4321</code> en tu navegador.</p>
+  </section>
+
+  <section id="aprendizajes">
+    <h2>Lo que Aprenderás</h2>
+
+    <p>Al completar este tutorial, habrás aprendido:</p>
+
+    <div class="learning-grid">
+      <div class="learning-item">
+        <h3>Estructurar prompts claros</h3>
+        <p>Cómo dar contexto, definir objetivos y especificar restricciones técnicas.</p>
+      </div>
+
+      <div class="learning-item">
+        <h3>Iterar efectivamente</h3>
+        <p>Cómo pedir cambios específicos sin tener que empezar de cero.</p>
+      </div>
+
+      <div class="learning-item">
+        <h3>Revisar antes de aprobar</h3>
+        <p>La importancia de leer los planes y no aprobar a ciegas.</p>
+      </div>
+
+      <div class="learning-item">
+        <h3>Dividir en pasos</h3>
+        <p>Por qué es mejor varios prompts pequeños que uno gigante.</p>
+      </div>
+    </div>
+
+    <div class="next-section">
+      <a href="/es/prompts" class="btn btn-primary btn-large">
+        Siguiente: Prompts y Tips →
+      </a>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .learning-item {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .learning-item h3 {
+    margin-top: 0;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+  }
+
+  .learning-item p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .next-section {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+</style>

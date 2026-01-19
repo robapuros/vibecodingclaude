@@ -1,0 +1,99 @@
+---
+interface Props {
+  code: string;
+  language?: string;
+  filename?: string;
+}
+
+const { code, language = 'text', filename } = Astro.props;
+---
+
+<div class="code-block">
+  {filename && (
+    <div class="code-header">
+      <span class="code-filename">{filename}</span>
+      <button class="copy-btn" data-code={code}>
+        Copy
+      </button>
+    </div>
+  )}
+  <pre class={`language-${language}`}><code>{code}</code></pre>
+</div>
+
+<style>
+  .code-block {
+    margin-bottom: var(--space-lg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-code-bg);
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-lg);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .code-filename {
+    color: var(--color-code-text);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    opacity: 0.8;
+  }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-code-text);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .copy-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .copy-btn.copied {
+    border-color: #10b981;
+    color: #10b981;
+  }
+
+  pre {
+    margin: 0;
+    padding: var(--space-lg);
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-code-text);
+    background: none;
+    padding: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.getAttribute('data-code') || '';
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
+</script>

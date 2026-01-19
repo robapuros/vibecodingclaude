@@ -1,0 +1,617 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t.prompts.title,
+  description: t.prompts.metaDescription,
+  inLanguage: 'es',
+};
+
+const promptTemplate = `You are a [ROL].
+
+We are building [DESCRIPCIÓN DEL PROYECTO].
+
+Requirements:
+- [Requisito 1]
+- [Requisito 2]
+
+Technical constraints:
+- [Restricción 1]
+- [Restricción 2]
+
+Output: [Qué esperas que Claude produzca]`;
+
+const apiPrompt = `You are a backend engineer specializing in Node.js.
+
+Create a REST API for a todo application with:
+- CRUD operations for tasks
+- User authentication with JWT
+- SQLite database
+- Input validation
+
+Use Express.js and follow REST best practices.
+Output the complete project structure first, then implement.`;
+
+const reactPrompt = `Create a React component for a responsive navigation bar with:
+- Logo on the left
+- Menu items in the center
+- Mobile hamburger menu
+- Dark/light mode toggle
+
+Use TypeScript and CSS modules. No external UI libraries.`;
+
+const bugPrompt = `I have this error: [MENSAJE DE ERROR]
+
+The relevant code is:
+[CÓDIGO]
+
+What's causing this and how do I fix it?`;
+---
+
+<ContentLayout
+  title={`${t.prompts.title} | ${t.siteTitle}`}
+  description={t.prompts.metaDescription}
+  lang={lang}
+  currentPath="prompts"
+  structuredData={structuredData}
+>
+  <h1>Prompts y Tips para Vibe Coding</h1>
+  <p class="lead">{t.prompts.description}</p>
+
+  <nav class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a href="#anatomia">Anatomía de un Buen Prompt</a></li>
+      <li><a href="#ejemplos">Prompts de Ejemplo</a></li>
+      <li><a href="#tips">Tips para Vibe Coding Efectivo</a></li>
+      <li><a href="#errores">Errores Comunes</a></li>
+      <li><a href="#avanzado">Tips Avanzados</a></li>
+    </ul>
+  </nav>
+
+  <section id="anatomia">
+    <h2>Anatomía de un Buen Prompt</h2>
+
+    <p>Un buen prompt tiene varios elementos clave:</p>
+
+    <ul>
+      <li><strong>Contexto:</strong> ¿Qué rol tiene Claude en esta tarea?</li>
+      <li><strong>Objetivo:</strong> ¿Qué estamos construyendo?</li>
+      <li><strong>Restricciones:</strong> Requisitos técnicos, limitaciones</li>
+      <li><strong>Estructura:</strong> Formato esperado del output</li>
+      <li><strong>Ejemplos:</strong> Cuando sea útil, muestra lo que esperas</li>
+    </ul>
+
+    <h3>Plantilla Base</h3>
+
+    <CodeBlock
+      code={promptTemplate}
+      language="text"
+      filename="Plantilla de Prompt"
+    />
+
+    <div class="callout">
+      <p><strong>Nota:</strong> No todos los prompts necesitan todos estos elementos. Para tareas simples, un prompt corto funciona bien. Usa la plantilla completa para proyectos complejos.</p>
+    </div>
+  </section>
+
+  <section id="ejemplos">
+    <h2>Prompts de Ejemplo</h2>
+
+    <h3>Para una API REST</h3>
+
+    <CodeBlock
+      code={apiPrompt}
+      language="text"
+      filename="Ejemplo: API Backend"
+    />
+
+    <p><strong>Por qué funciona:</strong> Define el stack (Node.js, Express), las funcionalidades específicas, y pide el plan antes de implementar.</p>
+
+    <h3>Para un Componente React</h3>
+
+    <CodeBlock
+      code={reactPrompt}
+      language="text"
+      filename="Ejemplo: Componente React"
+    />
+
+    <p><strong>Por qué funciona:</strong> Lista las características específicas y las restricciones técnicas (TypeScript, sin librerías externas).</p>
+
+    <h3>Para Corregir un Bug</h3>
+
+    <CodeBlock
+      code={bugPrompt}
+      language="text"
+      filename="Ejemplo: Debug"
+    />
+
+    <p><strong>Por qué funciona:</strong> Proporciona el error exacto y el código relevante. Claude puede diagnosticar mejor con información concreta.</p>
+  </section>
+
+  <section id="tips">
+    <h2>Tips para Vibe Coding Efectivo</h2>
+
+    <div class="tips-grid">
+      <div class="tip">
+        <h3>1. Sé específico</h3>
+        <div class="comparison">
+          <div class="bad">
+            <span class="label">Vago</span>
+            <p>"Botón azul"</p>
+          </div>
+          <div class="good">
+            <span class="label">Específico</span>
+            <p>"Botón azul (#3B82F6) con bordes redondeados (8px)"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <h3>2. Divide proyectos grandes</h3>
+        <p>Es mejor enviar varios prompts pequeños que uno gigante. Puedes revisar y ajustar en cada paso.</p>
+      </div>
+
+      <div class="tip">
+        <h3>3. Revisa antes de aprobar</h3>
+        <p>Lee el plan que propone Claude. No apruebes a ciegas. Si algo no te convence, pide cambios.</p>
+      </div>
+
+      <div class="tip">
+        <h3>4. Itera sin miedo</h3>
+        <p>"Cambia X por Y" es un prompt perfectamente válido. No tienes que empezar de cero.</p>
+      </div>
+
+      <div class="tip">
+        <h3>5. Aprende del código</h3>
+        <p>Pregunta "¿Por qué usaste X?" cuando no entiendas algo. Es una oportunidad para aprender.</p>
+      </div>
+
+      <div class="tip">
+        <h3>6. Guarda tus prompts</h3>
+        <p>Los buenos prompts son reutilizables. Guarda los que funcionan bien para futuros proyectos.</p>
+      </div>
+
+      <div class="tip">
+        <h3>7. Usa el contexto</h3>
+        <p>Claude recuerda la conversación. Puedes decir "en el componente anterior, añade..." sin repetir todo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="errores">
+    <h2>Errores Comunes</h2>
+
+    <div class="errors-list">
+      <div class="error-item">
+        <div class="error-comparison">
+          <div class="bad">
+            <span class="icon">✗</span>
+            <span class="label">Incorrecto</span>
+            <p>"Haz una web bonita"</p>
+          </div>
+          <div class="good">
+            <span class="icon">✓</span>
+            <span class="label">Correcto</span>
+            <p>"Crea una landing page minimalista con hero, 3 features, y CTA"</p>
+          </div>
+        </div>
+        <p class="explanation">Los prompts vagos producen resultados genéricos. Sé específico sobre lo que quieres.</p>
+      </div>
+
+      <div class="error-item">
+        <div class="error-comparison">
+          <div class="bad">
+            <span class="icon">✗</span>
+            <span class="label">Incorrecto</span>
+            <p>Aprobar el plan sin leerlo</p>
+          </div>
+          <div class="good">
+            <span class="icon">✓</span>
+            <span class="label">Correcto</span>
+            <p>Leer el plan y pedir cambios antes de implementar</p>
+          </div>
+        </div>
+        <p class="explanation">Es más fácil cambiar un plan que reescribir código. Revisa siempre.</p>
+      </div>
+
+      <div class="error-item">
+        <div class="error-comparison">
+          <div class="bad">
+            <span class="icon">✗</span>
+            <span class="label">Incorrecto</span>
+            <p>Un prompt de 2000 palabras con todo el proyecto</p>
+          </div>
+          <div class="good">
+            <span class="icon">✓</span>
+            <span class="label">Correcto</span>
+            <p>Dividir: plan → estructura → implementación → refinamiento</p>
+          </div>
+        </div>
+        <p class="explanation">Los prompts muy largos pueden confundir. Divide en pasos manejables.</p>
+      </div>
+
+      <div class="error-item">
+        <div class="error-comparison">
+          <div class="bad">
+            <span class="icon">✗</span>
+            <span class="label">Incorrecto</span>
+            <p>"No funciona, arréglalo"</p>
+          </div>
+          <div class="good">
+            <span class="icon">✓</span>
+            <span class="label">Correcto</span>
+            <p>"Al hacer clic en el botón, aparece este error: [error]. El código está en [archivo]."</p>
+          </div>
+        </div>
+        <p class="explanation">Proporciona contexto. Cuanta más información des, mejor será la solución.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="avanzado">
+    <h2>Tips Avanzados</h2>
+
+    <p>Una vez que domines lo básico, estas técnicas avanzadas te ayudarán a ser más productivo con Claude Code.</p>
+
+    <div class="advanced-tips">
+      <div class="advanced-tip">
+        <h3>1. Ejecutar servidores en segundo plano</h3>
+        <p>Cuando desarrollas una aplicación web, necesitas mantener el servidor corriendo mientras haces cambios. Claude Code puede ejecutar comandos en segundo plano:</p>
+
+        <CodeBlock
+          code={`# Inicia el servidor de desarrollo en segundo plano
+npm run dev
+
+# Claude Code detectará errores automáticamente
+# y te notificará si algo falla`}
+          language="bash"
+          filename="Terminal"
+        />
+
+        <p>Mientras el servidor corre, puedes pedirle a Claude que haga cambios y él verá los errores de compilación en tiempo real. Si hay un error, simplemente dile:</p>
+
+        <CodeBlock
+          code={`Hay un error en la consola. ¿Puedes revisarlo y corregirlo?`}
+          language="text"
+          filename="Prompt"
+        />
+      </div>
+
+      <div class="advanced-tip">
+        <h3>2. Modo Plan vs Modo Normal</h3>
+        <p>Claude Code tiene dos modos de operación que puedes alternar según la situación:</p>
+
+        <div class="mode-comparison">
+          <div class="mode">
+            <h4>Modo Normal</h4>
+            <p>Claude ejecuta cambios directamente. Ideal para:</p>
+            <ul>
+              <li>Cambios pequeños y específicos</li>
+              <li>Corrección de bugs</li>
+              <li>Tareas que ya tienes claras</li>
+            </ul>
+          </div>
+          <div class="mode">
+            <h4>Modo Plan</h4>
+            <p>Claude primero propone un plan detallado. Ideal para:</p>
+            <ul>
+              <li>Nuevas funcionalidades</li>
+              <li>Refactorizaciones grandes</li>
+              <li>Cuando no estás seguro del enfoque</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>Para activar el modo plan, usa el comando <code>/plan</code> o incluye en tu prompt:</p>
+
+        <CodeBlock
+          code={`Antes de implementar, muéstrame un plan detallado de los cambios.`}
+          language="text"
+          filename="Prompt"
+        />
+
+        <p>Revisa el plan, pide ajustes si es necesario, y luego aprueba para que Claude implemente.</p>
+      </div>
+
+      <div class="advanced-tip">
+        <h3>3. Monitorear múltiples procesos</h3>
+        <p>En proyectos complejos, puedes necesitar varios procesos corriendo (frontend, backend, base de datos). Claude Code puede manejarlos:</p>
+
+        <CodeBlock
+          code={`Inicia el servidor del backend en el puerto 3001 y el frontend en el 3000.
+Avísame si alguno tiene errores.`}
+          language="text"
+          filename="Prompt"
+        />
+
+        <p>Claude ejecutará ambos y monitoreará sus salidas para detectar problemas.</p>
+      </div>
+
+      <div class="advanced-tip">
+        <h3>4. Usar el contexto del proyecto</h3>
+        <p>Claude Code puede leer los archivos de tu proyecto. Aprovecha esto:</p>
+
+        <CodeBlock
+          code={`Revisa el archivo package.json y dime qué dependencias están desactualizadas.`}
+          language="text"
+          filename="Prompt"
+        />
+
+        <CodeBlock
+          code={`Mira cómo está implementado el componente Header y crea un Footer con el mismo estilo.`}
+          language="text"
+          filename="Prompt"
+        />
+      </div>
+
+      <div class="advanced-tip">
+        <h3>5. Debugging interactivo</h3>
+        <p>Cuando encuentres un bug difícil, usa Claude como tu compañero de debugging:</p>
+
+        <CodeBlock
+          code={`El formulario no envía los datos. Ya revisé:
+- El evento onSubmit está conectado
+- Los campos tienen los nombres correctos
+
+¿Qué más podría estar fallando? Revisa el código y dame hipótesis.`}
+          language="text"
+          filename="Prompt"
+        />
+
+        <p>Claude analizará el código, propondrá teorías y puede agregar logs temporales para diagnosticar.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="final-cta">
+    <h2>¿Listo para empezar?</h2>
+    <p>Ya tienes todo lo que necesitas para hacer vibe coding con Claude.</p>
+    <div class="cta-buttons">
+      <a href="/es/primera-app" class="btn btn-primary btn-large">Ver Tutorial Práctico</a>
+      <a href="/es/herramientas" class="btn btn-secondary btn-large">Configurar Herramientas</a>
+    </div>
+  </div>
+</ContentLayout>
+
+<style>
+  .tips-grid {
+    display: grid;
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .tip {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .tip h3 {
+    margin-top: 0;
+    font-size: 1.125rem;
+  }
+
+  .tip p {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  .tip .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .tip .bad,
+  .tip .good {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+  }
+
+  .tip .bad {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+
+  .tip .good {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  .tip .label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-muted);
+  }
+
+  .tip .bad p,
+  .tip .good p {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .errors-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    margin: var(--space-xl) 0;
+  }
+
+  .error-item {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .error-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .error-comparison .bad,
+  .error-comparison .good {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+  }
+
+  .error-comparison .bad {
+    background-color: #fef2f2;
+    border-left: 4px solid #ef4444;
+  }
+
+  .error-comparison .good {
+    background-color: #f0fdf4;
+    border-left: 4px solid #10b981;
+  }
+
+  .error-comparison .icon {
+    font-size: 1.25rem;
+    display: block;
+    margin-bottom: var(--space-xs);
+  }
+
+  .error-comparison .bad .icon {
+    color: #ef4444;
+  }
+
+  .error-comparison .good .icon {
+    color: #10b981;
+  }
+
+  .error-comparison .label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-muted);
+  }
+
+  .error-comparison p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .explanation {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .final-cta {
+    text-align: center;
+    padding: var(--space-2xl);
+    margin-top: var(--space-2xl);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: var(--radius-lg);
+  }
+
+  .final-cta h2 {
+    margin-top: 0;
+  }
+
+  .final-cta p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .advanced-tips {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    margin: var(--space-xl) 0;
+  }
+
+  .advanced-tip {
+    padding: var(--space-xl);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--color-primary);
+  }
+
+  .advanced-tip h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+  }
+
+  .advanced-tip p {
+    color: var(--color-text-muted);
+  }
+
+  .advanced-tip ul {
+    color: var(--color-text-muted);
+  }
+
+  .mode-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin: var(--space-lg) 0;
+  }
+
+  .mode {
+    padding: var(--space-lg);
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .mode h4 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+    font-size: 1rem;
+  }
+
+  .mode p {
+    margin-bottom: var(--space-sm);
+    font-size: 0.9rem;
+  }
+
+  .mode ul {
+    margin: 0;
+    padding-left: var(--space-lg);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    .tip .comparison,
+    .error-comparison,
+    .mode-comparison {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>

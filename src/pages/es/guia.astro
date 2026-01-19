@@ -1,0 +1,196 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t.guide.title,
+  description: t.guide.metaDescription,
+  inLanguage: 'es',
+  author: {
+    '@type': 'Organization',
+    name: 'Vibe Coding con Claude',
+  },
+};
+---
+
+<ContentLayout
+  title={`${t.guide.title} | ${t.siteTitle}`}
+  description={t.guide.metaDescription}
+  lang={lang}
+  currentPath="guide"
+  structuredData={structuredData}
+>
+  <h1>Guía Completa de Vibe Coding</h1>
+  <p class="lead">{t.guide.description}</p>
+
+  <nav class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a href="#que-es">¿Qué es Vibe Coding?</a></li>
+      <li><a href="#que-es-claude">¿Qué es Claude?</a></li>
+      <li><a href="#flujo-trabajo">El Flujo de Trabajo</a></li>
+      <li><a href="#primeros-pasos">Primeros Pasos</a></li>
+    </ul>
+  </nav>
+
+  <section id="que-es">
+    <h2>¿Qué es Vibe Coding?</h2>
+
+    <p><strong>Vibe coding</strong> es una nueva forma de programar donde describes lo que quieres construir en lenguaje natural, y la inteligencia artificial genera el código por ti.</p>
+
+    <p>El término fue popularizado por <strong>Andrej Karpathy</strong>, ex-director de IA en Tesla, quien describió esta nueva forma de trabajar donde el programador se convierte más en un "director" que en un "escritor" de código.</p>
+
+    <div class="callout">
+      <p><strong>El cambio de paradigma:</strong> En lugar de escribir cada línea de código manualmente, te enfocas en describir claramente <em>qué</em> quieres lograr, y la IA se encarga del <em>cómo</em>.</p>
+    </div>
+
+    <h3>¿Para quién es?</h3>
+    <ul>
+      <li><strong>Principiantes absolutos:</strong> Nunca has programado pero tienes ideas que quieres construir</li>
+      <li><strong>Programadores curiosos:</strong> Quieres acelerar tu flujo de trabajo 10x</li>
+      <li><strong>Emprendedores:</strong> Necesitas prototipos rápidos sin contratar un equipo</li>
+      <li><strong>Creativos:</strong> Diseñadores, escritores, artistas que quieren crear herramientas digitales</li>
+    </ul>
+  </section>
+
+  <section id="que-es-claude">
+    <h2>¿Qué es Claude?</h2>
+
+    <p><strong>Claude</strong> es un asistente de IA creado por <strong>Anthropic</strong>. Destaca especialmente en tareas de programación por varias razones:</p>
+
+    <ul>
+      <li><strong>Ventana de contexto amplia:</strong> Puede procesar proyectos completos, no solo fragmentos de código</li>
+      <li><strong>Razonamiento avanzado:</strong> Entiende la lógica detrás de lo que pides, no solo genera código mecánicamente</li>
+      <li><strong>Explicaciones claras:</strong> Cuando no entiendas algo, Claude puede explicártelo paso a paso</li>
+      <li><strong>Iteración natural:</strong> Puedes pedirle cambios en lenguaje conversacional</li>
+    </ul>
+
+    <h3>Claude vs Otras Herramientas</h3>
+
+    <p>Existen varias herramientas de IA para programar (GitHub Copilot, ChatGPT, etc.). Claude se distingue por:</p>
+
+    <ul>
+      <li>Mejor comprensión de proyectos completos</li>
+      <li>Respuestas más estructuradas y organizadas</li>
+      <li>Menor tendencia a "inventar" funciones que no existen</li>
+      <li><strong>Claude Code:</strong> Una herramienta CLI oficial que integra Claude directamente en tu terminal</li>
+    </ul>
+  </section>
+
+  <section id="flujo-trabajo">
+    <h2>El Flujo de Trabajo</h2>
+
+    <p>El vibe coding sigue un ciclo simple pero poderoso:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Describe tu idea</h3>
+          <p>Explica claramente qué quieres construir. Sé específico sobre funcionalidades, diseño y comportamiento.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Revisa el plan</h3>
+          <p>Claude te propondrá una estructura. Lee el plan antes de aprobar. Pide cambios si algo no te convence.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Genera el código</h3>
+          <p>Una vez aprobado el plan, Claude genera el código completo. Esto puede tomar unos momentos.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Prueba e itera</h3>
+          <p>Ejecuta el código, pruébalo, y pide ajustes. "Cambia el color del botón" o "Añade validación al formulario" son prompts válidos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-success">
+      <p><strong>Consejo:</strong> No intentes construir todo de una vez. Divide tu proyecto en partes pequeñas y ve iterando.</p>
+    </div>
+  </section>
+
+  <section id="primeros-pasos">
+    <h2>Primeros Pasos</h2>
+
+    <p>¿Listo para empezar? Aquí tienes los siguientes pasos:</p>
+
+    <ol>
+      <li><a href="/es/herramientas">Configura tus herramientas</a> - Elige tu plan de Claude e instala Claude Code</li>
+      <li><a href="/es/primera-app">Crea tu primera app</a> - Un tutorial paso a paso</li>
+      <li><a href="/es/prompts">Aprende a escribir prompts</a> - Tips y plantillas para comunicarte efectivamente con Claude</li>
+    </ol>
+
+    <div class="next-section">
+      <a href="/es/herramientas" class="btn btn-primary btn-large">
+        Siguiente: Herramientas →
+      </a>
+    </div>
+  </section>
+</ContentLayout>
+
+<style>
+  .steps {
+    margin: var(--space-xl) 0;
+  }
+
+  .step {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 50%;
+  }
+
+  .step-content h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .step-content p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .next-section {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .step {
+      flex-direction: column;
+    }
+  }
+</style>

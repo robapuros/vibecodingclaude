@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import LanguageSelector from '../components/LanguageSelector.astro';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Vibe Coding con Claude',
+  alternateName: 'Vibe Coding with Claude',
+  url: 'https://vibecodingclaude.com',
+  description: 'Learn vibe coding with Claude AI',
+  inLanguage: ['es', 'en'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibe Coding con Claude | Select Language</title>
+    <meta name="description" content="Learn vibe coding with Claude AI. Aprende vibe coding con Claude." />
+    <meta name="robots" content="noindex, follow" />
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="es" href="https://vibecodingclaude.com/es" />
+    <link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en" />
+    <link rel="alternate" hreflang="x-default" href="https://vibecodingclaude.com/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <LanguageSelector />
+  </body>
+</html>

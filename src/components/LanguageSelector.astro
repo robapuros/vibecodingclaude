@@ -1,0 +1,119 @@
+---
+const { es, en } = { es: 'Español', en: 'English' };
+---
+
+<div class="lang-selector">
+  <div class="lang-selector-content">
+    <h1 class="title">
+      <span class="title-es">Selecciona tu idioma</span>
+      <span class="title-en">Select your language</span>
+    </h1>
+
+    <div class="lang-options">
+      <a href="/es" class="lang-option">
+        <span class="lang-flag">🇪🇸</span>
+        <span class="lang-name">{es}</span>
+      </a>
+
+      <a href="/en" class="lang-option">
+        <span class="lang-flag">🇬🇧</span>
+        <span class="lang-name">{en}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .lang-selector {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+  }
+
+  .lang-selector-content {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-2xl);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .title-es {
+    color: var(--color-text);
+  }
+
+  .title-en {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+  }
+
+  .lang-options {
+    display: flex;
+    gap: var(--space-xl);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .lang-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-2xl);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+  }
+
+  .lang-option:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-secondary);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .lang-flag {
+    font-size: 3rem;
+  }
+
+  .lang-name {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 480px) {
+    .lang-options {
+      flex-direction: column;
+    }
+
+    .lang-option {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Auto-detect browser language and redirect (optional, with user choice)
+  const userLang = navigator.language.toLowerCase();
+  const hasVisited = localStorage.getItem('vibecodingclaude-visited');
+
+  if (!hasVisited) {
+    localStorage.setItem('vibecodingclaude-visited', 'true');
+    // Uncomment to enable auto-redirect:
+    // if (userLang.startsWith('es')) {
+    //   window.location.href = '/es';
+    // } else {
+    //   window.location.href = '/en';
+    // }
+  }
+</script>

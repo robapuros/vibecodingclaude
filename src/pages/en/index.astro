@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Vibe Coding with Claude',
+  url: 'https://vibecodingclaude.com/en',
+  description: t.siteDescription,
+  inLanguage: 'en',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://vibecodingclaude.com/en?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<BaseLayout
+  title={`${t.siteTitle} - Learn to Code with AI`}
+  description={t.siteDescription}
+  lang={lang}
+  currentPath=""
+  structuredData={structuredData}
+>
+  <Hero
+    title={t.landing.heroTitle}
+    subtitle={t.landing.heroSubtitle}
+    ctaPrimary={{ text: t.landing.ctaGuide, href: '/en/guide' }}
+    ctaSecondary={{ text: t.landing.ctaTools, href: '/en/tools' }}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature">
+          <h2>{t.landing.whatIsTitle}</h2>
+          <p>{t.landing.whatIsText}</p>
+        </div>
+
+        <div class="feature">
+          <h2>{t.landing.whyClaudeTitle}</h2>
+          <p>{t.landing.whyClaudeText}</p>
+        </div>
+      </div>
+
+      <div class="benefits">
+        <h2>{t.landing.benefitsTitle}</h2>
+        <ul class="benefits-list">
+          {t.landing.benefits.map((benefit) => (
+            <li>{benefit}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="cta-section">
+        <h2>Get Started Now</h2>
+        <p>Follow our step-by-step guide and create your first application today.</p>
+        <div class="cta-buttons">
+          <a href="/en/guide" class="btn btn-primary btn-large">Read the Guide</a>
+          <a href="/en/first-app" class="btn btn-secondary btn-large">View Tutorial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding: var(--space-3xl) 0;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .feature {
+    padding: var(--space-xl);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .feature h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+  }
+
+  .feature p {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  .benefits {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .benefits h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .benefits-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+  }
+
+  .benefits-list li::before {
+    content: '✓';
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: var(--space-2xl);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: var(--radius-lg);
+  }
+
+  .cta-section h2 {
+    margin-top: 0;
+  }
+
+  .cta-section p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>

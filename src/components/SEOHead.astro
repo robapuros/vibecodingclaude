@@ -1,0 +1,100 @@
+---
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  canonicalUrl?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  structuredData?: object;
+}
+
+const {
+  title,
+  description,
+  lang,
+  canonicalUrl,
+  ogImage = lang === 'es' ? '/og-image-es.png' : '/og-image-en.png',
+  noindex = false,
+  structuredData,
+} = Astro.props;
+
+const site = 'https://vibecodingclaude.com';
+const currentUrl = canonicalUrl || `${site}${Astro.url.pathname}`;
+const fullOgImage = `${site}${ogImage}`;
+
+// Get alternate URLs for hreflang
+const pathWithoutLang = Astro.url.pathname.replace(/^\/(es|en)/, '');
+const pathMap: Record<string, string> = {
+  '/guia': '/guide',
+  '/guide': '/guia',
+  '/herramientas': '/tools',
+  '/tools': '/herramientas',
+  '/primera-app': '/first-app',
+  '/first-app': '/primera-app',
+  '/prompts': '/prompts',
+};
+
+const normalizedPath = pathWithoutLang || '';
+const getAltPath = (targetLang: Lang) => {
+  if (targetLang === 'es') {
+    const esPath = Object.entries(pathMap).find(([es, en]) => en === normalizedPath)?.[0] || normalizedPath;
+    return `${site}/es${esPath}`;
+  } else {
+    const enPath = pathMap[normalizedPath] || normalizedPath;
+    return `${site}/en${enPath}`;
+  }
+};
+
+const esUrl = getAltPath('es');
+const enUrl = getAltPath('en');
+const locale = lang === 'es' ? 'es_ES' : 'en_US';
+const alternateLocale = lang === 'es' ? 'en_US' : 'es_ES';
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Primary Meta Tags -->
+  <title>{title}</title>
+  <meta name="title" content={title} />
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Canonical & Hreflang -->
+  <link rel="canonical" href={currentUrl} />
+  <link rel="alternate" hreflang="es" href={esUrl} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="x-default" href={`${site}/`} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={currentUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullOgImage} />
+  <meta property="og:locale" content={locale} />
+  <meta property="og:locale:alternate" content={alternateLocale} />
+  <meta property="og:site_name" content={lang === 'es' ? 'Vibe Coding con Claude' : 'Vibe Coding with Claude'} />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={currentUrl} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={fullOgImage} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Structured Data -->
+  {structuredData && (
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  )}
+
+  <slot />
+</head>
