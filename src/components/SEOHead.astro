@@ -91,6 +91,16 @@ const alternateLocale = lang === 'es' ? 'en_US' : 'es_ES';
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+  <!-- Theme initialization (prevents flash of unstyled content) -->
+  <script is:inline>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
   <!-- Structured Data -->
   {structuredData && (
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

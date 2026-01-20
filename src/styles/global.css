@@ -8,7 +8,7 @@
 }
 
 :root {
-  /* Colors */
+  /* Colors - Light Theme */
   --color-bg: #ffffff;
   --color-bg-secondary: #f8fafc;
   --color-text: #1e293b;
@@ -48,6 +48,23 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-primary: #818cf8;
+  --color-primary-hover: #a5b4fc;
+  --color-accent: #a78bfa;
+  --color-border: #334155;
+  --color-code-bg: #0f172a;
+  --color-code-text: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
 html {
   font-family: var(--font-sans);
   font-size: 16px;
@@ -55,6 +72,11 @@ html {
   color: var(--color-text);
   background-color: var(--color-bg);
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html, body, .nav, .footer, .card, .btn-secondary, th {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {

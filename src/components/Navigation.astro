@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/ui';
 import { useTranslations, getLocalizedPath } from '../i18n/ui';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   lang: Lang;
@@ -47,9 +48,12 @@ const alternateUrl = getLocalizedPath(currentPath, alternateLang);
         })}
       </ul>
 
-      <a href={alternateUrl} class="lang-switch" title={alternateLang === 'es' ? 'Ver en Español' : 'View in English'}>
-        {alternateLang.toUpperCase()}
-      </a>
+      <div class="nav-actions">
+        <a href={alternateUrl} class="lang-switch" title={alternateLang === 'es' ? 'Ver en Español' : 'View in English'}>
+          {alternateLang.toUpperCase()}
+        </a>
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 </nav>
@@ -161,6 +165,12 @@ const alternateUrl = getLocalizedPath(currentPath, alternateLang);
   .lang-switch:hover {
     background-color: var(--color-border);
     text-decoration: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
   }
 
   @media (max-width: 768px) {
