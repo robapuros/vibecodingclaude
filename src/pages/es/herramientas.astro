@@ -70,25 +70,25 @@ const structuredData = {
         <tbody>
           <tr>
             <td><strong>Free</strong></td>
-            <td>$0</td>
+            <td>0€</td>
             <td>Mensajes limitados, Claude 3.5 Sonnet</td>
             <td>Probar, tareas simples</td>
           </tr>
           <tr class="highlighted">
             <td><strong>Pro</strong></td>
-            <td>$20/mes</td>
+            <td>20€/mes</td>
             <td>5x más uso, Claude 3.5 Opus, prioridad</td>
             <td>Uso regular, proyectos serios</td>
           </tr>
           <tr>
             <td><strong>Max</strong></td>
-            <td>$100/mes</td>
+            <td>100€/mes</td>
             <td>20x más uso, máxima prioridad</td>
             <td>Uso profesional intensivo</td>
           </tr>
           <tr>
             <td><strong>Team</strong></td>
-            <td>$25/usuario/mes</td>
+            <td>25€/usuario/mes</td>
             <td>Colaboración, admin controls</td>
             <td>Equipos</td>
           </tr>
@@ -145,10 +145,48 @@ const structuredData = {
     </ul>
 
     <h3>Paso 1: Instalar Node.js</h3>
-    <p>Si no tienes Node.js, descárgalo e instálalo desde <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>. Elige la versión LTS.</p>
+    <p>Node.js es necesario para ejecutar Claude Code. Elige las instrucciones según tu sistema operativo:</p>
 
-    <p>Verifica la instalación:</p>
-    <CodeBlock code="node --version" language="bash" filename="Terminal" />
+    <h4>Windows</h4>
+    <ol>
+      <li>Ve a <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+      <li>Descarga el instalador LTS (botón verde grande)</li>
+      <li>Ejecuta el archivo .msi descargado</li>
+      <li>Sigue el asistente de instalación (acepta las opciones por defecto)</li>
+      <li>Reinicia tu terminal o PowerShell después de instalar</li>
+    </ol>
+
+    <h4>Mac</h4>
+    <p>Opción 1 - Usando Homebrew (recomendado):</p>
+    <CodeBlock code={`# Si no tienes Homebrew, instálalo primero:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Luego instala Node.js:
+brew install node`} language="bash" filename="Terminal" />
+
+    <p>Opción 2 - Instalador directo:</p>
+    <ol>
+      <li>Ve a <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+      <li>Descarga el instalador LTS para macOS</li>
+      <li>Ejecuta el archivo .pkg y sigue las instrucciones</li>
+    </ol>
+
+    <h4>Linux (Ubuntu/Debian)</h4>
+    <CodeBlock code={`# Actualizar repositorios
+sudo apt update
+
+# Instalar Node.js desde el repositorio oficial
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs`} language="bash" filename="Terminal" />
+
+    <h4>Linux (Fedora/RHEL)</h4>
+    <CodeBlock code={`# Instalar Node.js
+sudo dnf install nodejs`} language="bash" filename="Terminal" />
+
+    <p><strong>Verifica la instalación</strong> (todos los sistemas):</p>
+    <CodeBlock code={`node --version
+npm --version`} language="bash" filename="Terminal" />
+    <p>Deberías ver números de versión como <code>v18.x.x</code> o superior.</p>
 
     <h3>Paso 2: Instalar Claude Code</h3>
     <p>Abre tu terminal y ejecuta:</p>

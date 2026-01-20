@@ -310,7 +310,12 @@ npm run dev
           </div>
         </div>
 
-        <p>Para activar el modo plan, usa el comando <code>/plan</code> o incluye en tu prompt:</p>
+        <p>Para alternar entre modos, tienes varias opciones:</p>
+        <ul>
+          <li><strong>Shift + Tab:</strong> Atajo rápido para cambiar entre modo normal y modo plan</li>
+          <li><strong>/plan:</strong> Comando para activar el modo plan</li>
+          <li><strong>En tu prompt:</strong> Pide explícitamente un plan antes de implementar</li>
+        </ul>
 
         <CodeBlock
           code={`Antes de implementar, muéstrame un plan detallado de los cambios.`}
@@ -367,6 +372,43 @@ Avísame si alguno tiene errores.`}
         />
 
         <p>Claude analizará el código, propondrá teorías y puede agregar logs temporales para diagnosticar.</p>
+      </div>
+
+      <div class="advanced-tip">
+        <h3>6. Comandos útiles de Claude Code</h3>
+        <p>Claude Code tiene varios comandos y opciones que te ayudarán en tu flujo de trabajo:</p>
+
+        <h4>Comandos de terminal</h4>
+        <CodeBlock
+          code={`# Retomar una sesión anterior
+claude --resume
+
+# Continuar la última conversación
+claude --continue
+
+# Iniciar con un prompt específico
+claude "crea un componente de login"`}
+          language="bash"
+          filename="Terminal"
+        />
+
+        <h4>Comandos dentro de Claude Code</h4>
+        <CodeBlock
+          code={`/config     # Ver y modificar tu configuración
+/status     # Ver uso de tokens y estado de la sesión
+/clear      # Limpiar el historial de la conversación
+/help       # Ver todos los comandos disponibles
+/compact    # Compactar la conversación para ahorrar tokens`}
+          language="bash"
+          filename="Comandos"
+        />
+
+        <h4>Atajos de teclado</h4>
+        <ul>
+          <li><strong>Shift + Tab:</strong> Alternar entre modo normal y modo plan</li>
+          <li><strong>Ctrl + C:</strong> Cancelar la operación actual</li>
+          <li><strong>Flecha arriba:</strong> Navegar por el historial de prompts</li>
+        </ul>
       </div>
     </div>
   </section>

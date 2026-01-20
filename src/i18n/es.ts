@@ -62,7 +62,7 @@ export const es = {
   // Footer
   footer: {
     madeWith: 'Esta web fue creada usando vibe coding con Claude.',
-    copyright: '© 2024 Vibe Coding con Claude',
+    copyright: '© 2026 Vibe Coding con Claude',
   },
 
   // Language Selector

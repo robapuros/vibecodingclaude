@@ -310,7 +310,12 @@ npm run dev
           </div>
         </div>
 
-        <p>To activate plan mode, use the <code>/plan</code> command or include in your prompt:</p>
+        <p>To toggle between modes, you have several options:</p>
+        <ul>
+          <li><strong>Shift + Tab:</strong> Quick shortcut to switch between normal and plan mode</li>
+          <li><strong>/plan:</strong> Command to activate plan mode</li>
+          <li><strong>In your prompt:</strong> Explicitly ask for a plan before implementing</li>
+        </ul>
 
         <CodeBlock
           code={`Before implementing, show me a detailed plan of the changes.`}
@@ -367,6 +372,43 @@ What else could be failing? Review the code and give me hypotheses.`}
         />
 
         <p>Claude will analyze the code, propose theories, and can add temporary logs to diagnose.</p>
+      </div>
+
+      <div class="advanced-tip">
+        <h3>6. Useful Claude Code commands</h3>
+        <p>Claude Code has several commands and options that will help your workflow:</p>
+
+        <h4>Terminal commands</h4>
+        <CodeBlock
+          code={`# Resume a previous session
+claude --resume
+
+# Continue the last conversation
+claude --continue
+
+# Start with a specific prompt
+claude "create a login component"`}
+          language="bash"
+          filename="Terminal"
+        />
+
+        <h4>Commands inside Claude Code</h4>
+        <CodeBlock
+          code={`/config     # View and modify your configuration
+/status     # View token usage and session status
+/clear      # Clear the conversation history
+/help       # View all available commands
+/compact    # Compact the conversation to save tokens`}
+          language="bash"
+          filename="Commands"
+        />
+
+        <h4>Keyboard shortcuts</h4>
+        <ul>
+          <li><strong>Shift + Tab:</strong> Toggle between normal and plan mode</li>
+          <li><strong>Ctrl + C:</strong> Cancel the current operation</li>
+          <li><strong>Arrow up:</strong> Navigate through prompt history</li>
+        </ul>
       </div>
     </div>
   </section>

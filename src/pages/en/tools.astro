@@ -145,10 +145,48 @@ const structuredData = {
     </ul>
 
     <h3>Step 1: Install Node.js</h3>
-    <p>If you don't have Node.js, download and install it from <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>. Choose the LTS version.</p>
+    <p>Node.js is required to run Claude Code. Choose the instructions for your operating system:</p>
 
-    <p>Verify the installation:</p>
-    <CodeBlock code="node --version" language="bash" filename="Terminal" />
+    <h4>Windows</h4>
+    <ol>
+      <li>Go to <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+      <li>Download the LTS installer (big green button)</li>
+      <li>Run the downloaded .msi file</li>
+      <li>Follow the installation wizard (accept the default options)</li>
+      <li>Restart your terminal or PowerShell after installing</li>
+    </ol>
+
+    <h4>Mac</h4>
+    <p>Option 1 - Using Homebrew (recommended):</p>
+    <CodeBlock code={`# If you don't have Homebrew, install it first:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Then install Node.js:
+brew install node`} language="bash" filename="Terminal" />
+
+    <p>Option 2 - Direct installer:</p>
+    <ol>
+      <li>Go to <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+      <li>Download the LTS installer for macOS</li>
+      <li>Run the .pkg file and follow the instructions</li>
+    </ol>
+
+    <h4>Linux (Ubuntu/Debian)</h4>
+    <CodeBlock code={`# Update repositories
+sudo apt update
+
+# Install Node.js from official repository
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs`} language="bash" filename="Terminal" />
+
+    <h4>Linux (Fedora/RHEL)</h4>
+    <CodeBlock code={`# Install Node.js
+sudo dnf install nodejs`} language="bash" filename="Terminal" />
+
+    <p><strong>Verify the installation</strong> (all systems):</p>
+    <CodeBlock code={`node --version
+npm --version`} language="bash" filename="Terminal" />
+    <p>You should see version numbers like <code>v18.x.x</code> or higher.</p>
 
     <h3>Step 2: Install Claude Code</h3>
     <p>Open your terminal and run:</p>
