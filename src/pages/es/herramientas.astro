@@ -189,10 +189,17 @@ npm --version`} language="bash" filename="Terminal" />
     <p>Deberías ver números de versión como <code>v18.x.x</code> o superior.</p>
 
     <h3>Paso 2: Instalar Claude Code</h3>
-    <p>Abre tu terminal y ejecuta:</p>
+
+    <h4>Opción A: Instalación Nativa (Recomendada)</h4>
+    <p>La forma más fácil de instalar Claude Code. Ejecuta este comando en tu terminal:</p>
+    <CodeBlock code="curl -fsSL https://claude.ai/install.sh | bash" language="bash" filename="Terminal" />
+    <p>Este script detecta automáticamente tu sistema operativo e instala Claude Code con todas las dependencias.</p>
+
+    <h4>Opción B: Usando npm</h4>
+    <p>Si prefieres usar npm:</p>
     <CodeBlock code="npm install -g @anthropic-ai/claude-code" language="bash" filename="Terminal" />
 
-    <p>En Mac con Homebrew también puedes usar:</p>
+    <h4>Opción C: Usando Homebrew (solo Mac)</h4>
     <CodeBlock code="brew install claude-code" language="bash" filename="Terminal" />
 
     <h3>Paso 3: Verificar instalación</h3>
