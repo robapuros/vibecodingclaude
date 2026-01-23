@@ -1,0 +1,19 @@
+{
+  "name": "vibecodingclaude-animation",
+  "version": "1.0.0",
+  "description": "Remotion animation for Vibe Coding with Claude",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render src/index.ts VibeCodeDemo out/vibe-coding-demo.mp4",
+    "build-gif": "remotion render src/index.ts VibeCodeDemo out/vibe-coding-demo.gif --image-format=png"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.409",
+    "@remotion/cli": "^4.0.409",
+    "@types/react": "^19.2.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.409",
+    "typescript": "^5.9.3"
+  }
+}

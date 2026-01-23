@@ -35,6 +35,22 @@ const structuredData = {
     ctaSecondary={{ text: t.landing.ctaTools, href: '/es/herramientas' }}
   />
 
+  <section class="video-section">
+    <div class="container">
+      <div class="video-wrapper">
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          poster="/og-image-es.png"
+        >
+          <source src="/vibe-coding-demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <div class="feature-grid">
@@ -71,6 +87,25 @@ const structuredData = {
 </BaseLayout>
 
 <style>
+  .video-section {
+    padding: var(--space-2xl) 0;
+    background: var(--color-bg-secondary);
+  }
+
+  .video-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   .section {
     padding: var(--space-3xl) 0;
   }
