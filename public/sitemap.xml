@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Language Selector -->
+  <url>
+    <loc>https://vibecodingclaude.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vibecodingclaude.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vibecodingclaude.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
   <!-- Spanish Pages -->
   <url>
     <loc>https://vibecodingclaude.com/es/</loc>
