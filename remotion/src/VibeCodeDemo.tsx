@@ -12,11 +12,11 @@ import { WebPreview } from "./components/WebPreview";
 
 // Scene timings (in frames at 30fps)
 const SCENES = {
-  TERMINAL_INIT: { start: 0, duration: 140 },
-  PROMPT_TYPING: { start: 140, duration: 150 },
-  CLAUDE_RESPONSE: { start: 290, duration: 90 },
-  WEB_PREVIEW: { start: 380, duration: 120 },
-  CTA: { start: 500, duration: 100 },
+  TERMINAL_INIT: { start: 0, duration: 100 },
+  PROMPT_TYPING: { start: 100, duration: 150 },
+  CLAUDE_RESPONSE: { start: 250, duration: 90 },
+  WEB_PREVIEW: { start: 340, duration: 120 },
+  CTA: { start: 460, duration: 140 },
 };
 
 const TerminalLine: React.FC<{
@@ -65,8 +65,8 @@ const ClaudeResponse: React.FC<{
   );
 };
 
-// Claude Code ASCII Mascot
-const ClaudeMascot: React.FC<{ startFrame: number }> = ({ startFrame }) => {
+// Claude Code Official Icon Banner
+const ClaudeCodeBanner: React.FC<{ startFrame: number }> = ({ startFrame }) => {
   const frame = useCurrentFrame();
 
   const opacity = interpolate(
@@ -83,63 +83,28 @@ const ClaudeMascot: React.FC<{ startFrame: number }> = ({ startFrame }) => {
       style={{
         opacity,
         fontFamily: "monospace",
-        fontSize: 14,
-        lineHeight: 1.2,
-        color: "#d97706",
-        marginBottom: 8,
+        fontSize: 20,
+        lineHeight: 1.4,
+        marginTop: 16,
+        marginBottom: 24,
       }}
     >
-      <pre style={{ margin: 0 }}>
-{`    ╭──────────────────────────────────────────────────────────╮
-    │                                                          │
-    │    ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗     │
-    │   ██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██╔════╝     │
-    │   ██║     ██║     ███████║██║   ██║██║  ██║█████╗       │
-    │   ██║     ██║     ██╔══██║██║   ██║██║  ██║██╔══╝       │
-    │   ╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝███████╗     │
-    │    ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝     │
-    │                                                          │`}
-      </pre>
-    </div>
-  );
-};
-
-const ClaudeInfo: React.FC<{ startFrame: number }> = ({ startFrame }) => {
-  const frame = useCurrentFrame();
-
-  const opacity = interpolate(
-    frame,
-    [startFrame, startFrame + 10],
-    [0, 1],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-
-  if (frame < startFrame) return null;
-
-  return (
-    <div
-      style={{
-        opacity,
-        fontFamily: "monospace",
-        fontSize: 14,
-        lineHeight: 1.2,
-        marginBottom: 16,
-      }}
-    >
-      <pre style={{ margin: 0, color: "#666" }}>
-{`    │           `}<span style={{ color: "#d97706", fontWeight: "bold" }}>Claude Code</span>{` `}<span style={{ color: "#888" }}>v2.17.0</span>{`                        │
-    │                                                          │
-    │   `}<span style={{ color: "#888" }}>/\\</span>{`    Your AI-powered coding assistant              │
-    │  `}<span style={{ color: "#d97706" }}>/  \\</span>{`   Ready to vibe code with you                   │
-    │ `}<span style={{ color: "#d97706" }}>/    \\</span>{`                                                │
-    │`}<span style={{ color: "#d97706" }}>/ ◠  ◠ \\</span>{`  Type your request to get started             │
-    │`}<span style={{ color: "#d97706" }}>\\  ──  /</span>{`                                               │
-    │ `}<span style={{ color: "#d97706" }}>\\    /</span>{`                                                │
-    │  `}<span style={{ color: "#d97706" }}>\\  /</span>{`                                                 │
-    │   `}<span style={{ color: "#d97706" }}>\\/</span>{`                                                  │
-    │                                                          │
-    ╰──────────────────────────────────────────────────────────╯`}
-      </pre>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+        <pre style={{ margin: 0, color: "#d97706", fontSize: 24, lineHeight: 1.2 }}>
+{` ▐▛███▜▌
+▝▜█████▛▘
+  ▘▘ ▝▝`}
+        </pre>
+        <div style={{ paddingTop: 4 }}>
+          <div>
+            <span style={{ color: "#d97706", fontWeight: "bold" }}>Claude Code</span>
+            <span style={{ color: "#666" }}> v2.1.17</span>
+          </div>
+          <div style={{ color: "#888", fontSize: 16 }}>
+            Opus 4.5 · Claude Pro
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -193,9 +158,8 @@ export const VibeCodeDemo: React.FC = () => {
               />
             </TerminalLine>
 
-            {/* Claude Code ASCII Banner with Mascot */}
-            <ClaudeMascot startFrame={45} />
-            <ClaudeInfo startFrame={60} />
+            {/* Claude Code Official Banner */}
+            <ClaudeCodeBanner startFrame={45} />
 
             {/* User prompt */}
             {frame >= SCENES.PROMPT_TYPING.start && (
