@@ -6,24 +6,72 @@ import { useTranslations } from '../../i18n/ui';
 const lang = 'en';
 const t = useTranslations(lang);
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'How to set up OpenClaw with Claude Pro on a VPS',
-  description: 'Complete guide to install and configure OpenClaw, the open-source autonomous AI assistant, on an affordable VPS with Claude Pro.',
-  inLanguage: 'en',
-  totalTime: 'PT45M',
-  tool: [
-    { '@type': 'HowToTool', name: 'OpenClaw' },
-    { '@type': 'HowToTool', name: 'Docker' },
-    { '@type': 'HowToTool', name: 'VPS (DigitalOcean or similar)' },
-  ],
-};
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to install and set up OpenClaw on a VPS with Claude Pro',
+    description: 'Step-by-step guide to install OpenClaw, the open-source autonomous AI agent, on an affordable VPS using Docker and connect it with Claude Pro via WhatsApp, Telegram and more.',
+    inLanguage: 'en',
+    totalTime: 'PT45M',
+    tool: [
+      { '@type': 'HowToTool', name: 'OpenClaw' },
+      { '@type': 'HowToTool', name: 'Docker' },
+      { '@type': 'HowToTool', name: 'VPS (DigitalOcean, Hetzner or similar)' },
+    ],
+    step: [
+      { '@type': 'HowToStep', name: 'Connect to your VPS', text: 'Open your terminal and connect to your VPS via SSH with ssh root@YOUR-VPS-IP' },
+      { '@type': 'HowToStep', name: 'Install Docker', text: 'Update the system with apt update && apt upgrade -y and install Docker with curl -fsSL https://get.docker.com | sh' },
+      { '@type': 'HowToStep', name: 'Install OpenClaw', text: 'Clone the repository with git clone https://github.com/openclaw/openclaw.git and run docker compose up -d' },
+      { '@type': 'HowToStep', name: 'Initial configuration', text: 'Run docker exec -it openclaw npx openclaw to open the interactive configuration wizard' },
+      { '@type': 'HowToStep', name: 'Connect Claude Pro', text: 'Configure your Anthropic API Key or use the Claude Max API Proxy to connect your subscription' },
+      { '@type': 'HowToStep', name: 'Connect messaging', text: 'Connect WhatsApp, Telegram or Discord to talk to your assistant from your favorite app' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is OpenClaw?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'OpenClaw (formerly Clawdbot/Moltbot) is a free, open-source autonomous AI agent with over 145,000 GitHub stars. It lets you have a personal AI assistant accessible from WhatsApp, Telegram, Discord and more, that can execute code, automate tasks, and has persistent memory.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How much does OpenClaw cost?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'OpenClaw is free and open-source. You only need an affordable VPS ($4-6/month) and a Claude Pro subscription ($20/month) or Anthropic API Key. Total cost is approximately $24-26/month.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What messaging platforms does OpenClaw support?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'OpenClaw supports WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Google Chat, and Matrix.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What AI models does OpenClaw support?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'OpenClaw is multi-model: it supports Claude (Anthropic), GPT-4o (OpenAI), Gemini (Google), DeepSeek, and local models with Ollama.',
+        },
+      },
+    ],
+  },
+];
 ---
 
 <ContentLayout
-  title={`OpenClaw: Your Personal AI Assistant | ${t.siteTitle}`}
-  description="Complete guide to install OpenClaw on an affordable VPS with Claude Pro. Learn how to have your own autonomous AI assistant accessible from WhatsApp, Telegram and more."
+  title={`OpenClaw: Complete Installation & Setup Guide (2025) | ${t.siteTitle}`}
+  description="Step-by-step guide to install OpenClaw on an affordable VPS with Claude Pro. Set up your autonomous AI assistant on WhatsApp, Telegram and Discord from $24/month."
   lang={lang}
   currentPath="openclaw"
   structuredData={structuredData}
@@ -42,6 +90,7 @@ const structuredData = {
       <li><a href="#claude-pro">Connect with Claude Pro</a></li>
       <li><a href="#messaging">Connect Messaging Platform</a></li>
       <li><a href="#security">Security and Best Practices</a></li>
+      <li><a href="#faq">Frequently Asked Questions</a></li>
     </ul>
   </nav>
 
@@ -354,6 +403,35 @@ su - openclaw`}
     />
   </section>
 
+  <section id="faq">
+    <h2>Frequently Asked Questions about OpenClaw</h2>
+
+    <div class="faq-item">
+      <h3>What is OpenClaw and what is it used for?</h3>
+      <p>OpenClaw (formerly known as Clawdbot and Moltbot) is a <strong>free, open-source autonomous AI agent</strong> with over 145,000 GitHub stars. It works as a personal AI assistant that you can use from WhatsApp, Telegram, Discord, and other messaging platforms. It can execute code, automate tasks, browse the web, and remember your preferences across conversations.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is OpenClaw free?</h3>
+      <p>Yes, OpenClaw is completely <strong>free and open-source</strong>. However, you need a VPS to host it (from $4-6/month) and a subscription or API key from an AI provider like Claude Pro ($20/month). The total approximate cost is $24-26/month.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What's the difference between OpenClaw and using Claude in the browser?</h3>
+      <p>Claude in the browser is a chat interface. OpenClaw is an <strong>autonomous agent</strong> that lives on your server: it can execute commands, read/write files, schedule automated tasks with cron, and is available 24/7 from your messaging apps. It's like having your own dedicated AI assistant.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What messaging platforms does OpenClaw support?</h3>
+      <p>OpenClaw supports <strong>WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Google Chat, and Matrix</strong>. Telegram is the easiest to set up, while WhatsApp requires scanning a QR code.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is OpenClaw safe to use?</h3>
+      <p>OpenClaw is safe if you follow best practices: use a <strong>dedicated, isolated VPS</strong>, don't give root access, configure a firewall, and don't install skills from unverified sources. Security researchers have identified risks, so it's recommended not to install it on your personal computer or servers with sensitive data.</p>
+    </div>
+  </section>
+
   <div class="callout">
     <p><strong>Additional resources:</strong></p>
     <ul>
@@ -411,6 +489,27 @@ su - openclaw`}
   .pricing-table th {
     background-color: var(--color-bg-secondary);
     font-weight: 600;
+  }
+
+  .faq-item {
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+  }
+
+  .faq-item p {
+    margin: 0;
+    color: var(--color-text-muted);
   }
 
   .next-section {
