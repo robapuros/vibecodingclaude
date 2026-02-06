@@ -90,6 +90,7 @@ components, then create all pages with full content.`;
       <li><a href="#prompt-2">Prompt 2: Content</a></li>
       <li><a href="#prompt-3">Prompt 3: Implementation</a></li>
       <li><a href="#iteration">Iteration and Refinement</a></li>
+      <li><a href="#deploy">Deploy Your Website to the Internet</a></li>
       <li><a href="#learnings">What You'll Learn</a></li>
     </ul>
   </nav>
@@ -238,6 +239,88 @@ npm run dev`}
     />
 
     <p>Open <code>http://localhost:4321</code> in your browser.</p>
+
+    <div class="callout callout-warning">
+      <p><strong>What is localhost?</strong> When you run <code>npm run dev</code>, your website opens at <code>localhost</code> - this means it's running <strong>only on your computer</strong>. It's a local address, visible only to you. Nobody else in the world can see your website on localhost. If you want other people to see your site, you need to <strong>publish it to the internet</strong> using a hosting service like Vercel or Cloudflare Pages.</p>
+    </div>
+  </section>
+
+  <section id="deploy">
+    <h2>Deploy Your Website to the Internet</h2>
+
+    <p>Your website works on localhost, but now you want the world to see it. Let's publish it <strong>for free</strong> using GitHub + Vercel.</p>
+
+    <h3>Step 1: Upload your code to GitHub</h3>
+
+    <p>First you need an account on <a href="https://github.com" target="_blank" rel="noopener">github.com</a> (it's free). Then:</p>
+
+    <ol>
+      <li>Create a new repository on GitHub (click the "+" button → "New repository")</li>
+      <li>Give it a name (for example, <code>my-vibe-coding-website</code>)</li>
+      <li>Leave it public and <strong>don't</strong> add a README or .gitignore (you already have them)</li>
+      <li>Click "Create repository"</li>
+    </ol>
+
+    <p>Now connect your local project to GitHub. In your terminal (outside Claude Code):</p>
+
+    <CodeBlock
+      code={`git init
+git add .
+git commit -m "My first vibe coded website"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/my-vibe-coding-website.git
+git push -u origin main`}
+      language="bash"
+      filename="Terminal"
+    />
+
+    <div class="callout">
+      <p><strong>Tip:</strong> Replace <code>YOUR-USERNAME</code> with your GitHub username and <code>my-vibe-coding-website</code> with the name you gave your repository.</p>
+    </div>
+
+    <h3>Step 2: Connect to Vercel (free hosting)</h3>
+
+    <ol>
+      <li>Go to <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> and create a free account (you can use your GitHub account)</li>
+      <li>Click <strong>"Add New Project"</strong></li>
+      <li>Select <strong>"Import Git Repository"</strong> and choose the repository you just created</li>
+      <li>Vercel will automatically detect that it's an Astro project</li>
+      <li>Click <strong>"Deploy"</strong></li>
+    </ol>
+
+    <p>In less than a minute, Vercel will build your website and give you a public URL like:</p>
+
+    <CodeBlock
+      code="https://my-vibe-coding-website.vercel.app"
+      language="text"
+      filename="Your public URL"
+    />
+
+    <p><strong>You can share that URL with anyone in the world.</strong></p>
+
+    <h3>Step 3: Custom domain (optional)</h3>
+
+    <p>If you want your own domain (like <code>vibecodingclaude.com</code>), you can:</p>
+
+    <ol>
+      <li>Buy a domain from services like Namecheap, Google Domains, or Cloudflare</li>
+      <li>In Vercel, go to Settings → Domains → Add</li>
+      <li>Follow the instructions to configure DNS</li>
+    </ol>
+
+    <h3>Automatic updates</h3>
+
+    <p>The best thing about Vercel + GitHub is that every time you <code>git push</code>, Vercel will automatically rebuild your website. The workflow is:</p>
+
+    <ol>
+      <li>Make changes with Claude Code</li>
+      <li>Run <code>git add . && git commit -m "description" && git push</code></li>
+      <li>Vercel detects the change and publishes the new version in seconds</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>Alternative:</strong> If you prefer another platform, <a href="https://pages.cloudflare.com" target="_blank" rel="noopener">Cloudflare Pages</a> and <a href="https://www.netlify.com" target="_blank" rel="noopener">Netlify</a> also offer free hosting with the same GitHub workflow.</p>
+    </div>
   </section>
 
   <section id="learnings">
