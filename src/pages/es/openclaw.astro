@@ -45,7 +45,7 @@ const structuredData = [
         name: '¿Cuánto cuesta usar OpenClaw?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'OpenClaw es gratuito y de código abierto. Solo necesitas un VPS económico ($4-6/mes) y una suscripción a Claude Pro ($20/mes) o API Key de Anthropic. El costo total es de aproximadamente $24-26/mes.',
+          text: 'OpenClaw es gratuito y de código abierto. Solo necesitas un VPS económico (4-6€/mes) y una suscripción a Claude Pro (18€/mes) o API Key de Anthropic. El coste total es de aproximadamente 22-24€/mes.',
         },
       },
       {
@@ -71,7 +71,7 @@ const structuredData = [
 
 <ContentLayout
   title={`OpenClaw: Guía Completa de Instalación y Configuración (2025) | ${t.siteTitle}`}
-  description="Guía paso a paso para instalar OpenClaw en un VPS económico con Claude Pro. Configura tu asistente de IA autónomo en WhatsApp, Telegram y Discord desde $24/mes."
+  description="Guía paso a paso para instalar OpenClaw en un VPS económico con Claude Pro. Configura tu asistente de IA autónomo en WhatsApp, Telegram y Discord desde 22€/mes."
   lang={lang}
   currentPath="openclaw"
   structuredData={structuredData}
@@ -156,13 +156,13 @@ const structuredData = [
     <p>Para seguir esta guía necesitas:</p>
 
     <ol>
-      <li><strong>Una suscripción a Claude Pro</strong> ($20/mes) o Max ($100/mes) - <a href="/es/herramientas">ver planes</a></li>
-      <li><strong>Un VPS</strong> (servidor virtual) - desde $4-6/mes</li>
+      <li><strong>Una suscripción a Claude Pro</strong> (18€/mes) o Max (90€/mes) - <a href="/es/herramientas">ver planes</a></li>
+      <li><strong>Un VPS</strong> (servidor virtual) - desde 4-6€/mes</li>
       <li><strong>Una cuenta en una plataforma de mensajería</strong> - WhatsApp, Telegram, Discord, etc.</li>
       <li><strong>Conocimientos básicos de terminal</strong> - saber ejecutar comandos (lo que has aprendido en esta guía)</li>
     </ol>
 
-    <p><strong>Costo total mensual:</strong> ~$24-26/mes (Claude Pro + VPS económico)</p>
+    <p><strong>Coste total mensual:</strong> ~22-24€/mes (Claude Pro + VPS económico)</p>
   </section>
 
   <section id="vps">
@@ -182,13 +182,13 @@ const structuredData = [
       <tbody>
         <tr>
           <td><strong>DigitalOcean</strong></td>
-          <td>$6</td>
+          <td>6€</td>
           <td>1 GB</td>
           <td>1-Click deploy disponible para OpenClaw</td>
         </tr>
         <tr>
           <td><strong>Hostinger</strong></td>
-          <td>$4-5</td>
+          <td>4-5€</td>
           <td>2 GB</td>
           <td>Template Docker para OpenClaw</td>
         </tr>
@@ -200,7 +200,7 @@ const structuredData = [
         </tr>
         <tr>
           <td><strong>Vultr</strong></td>
-          <td>$5</td>
+          <td>5€</td>
           <td>1 GB</td>
           <td>Muchas ubicaciones disponibles</td>
         </tr>
@@ -369,7 +369,7 @@ docker exec -it openclaw npx openclaw`}
     <h3>Recomendaciones de seguridad</h3>
 
     <ul>
-      <li><strong>Usa un VPS dedicado</strong> - No instales OpenClaw en tu computadora personal ni en un servidor con datos sensibles. Un VPS aislado de $5/mes es la mejor opción</li>
+      <li><strong>Usa un VPS dedicado</strong> - No instales OpenClaw en tu computadora personal ni en un servidor con datos sensibles. Un VPS aislado de 5€/mes es la mejor opción</li>
       <li><strong>No des acceso root</strong> - Configura un usuario sin privilegios para OpenClaw</li>
       <li><strong>Revisa los Skills</strong> - No instales skills de fuentes no verificadas. Se han encontrado skills maliciosos que roban credenciales</li>
       <li><strong>Monitorea el uso de API</strong> - Los bucles de agente pueden generar costos inesperados. Configura límites de gasto en tu proveedor de IA</li>
@@ -413,7 +413,7 @@ su - openclaw`}
 
     <div class="faq-item">
       <h3>¿OpenClaw es gratis?</h3>
-      <p>Sí, OpenClaw es completamente <strong>gratuito y de código abierto</strong>. Sin embargo, necesitas un VPS para hospedarlo (desde $4-6/mes) y una suscripción o API key de un proveedor de IA como Claude Pro ($20/mes). El costo total aproximado es de $24-26/mes.</p>
+      <p>Sí, OpenClaw es completamente <strong>gratuito y de código abierto</strong>. Sin embargo, necesitas un VPS para hospedarlo (desde 4-6€/mes) y una suscripción o API key de un proveedor de IA como Claude Pro (18€/mes). El coste total aproximado es de 22-24€/mes.</p>
     </div>
 
     <div class="faq-item">
