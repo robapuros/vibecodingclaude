@@ -10,6 +10,7 @@ export const es = {
     tools: 'Herramientas',
     firstApp: 'Primera App',
     prompts: 'Prompts',
+    openclaw: 'OpenClaw',
   },
 
   // Landing Page

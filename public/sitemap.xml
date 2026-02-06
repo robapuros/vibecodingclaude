@@ -43,6 +43,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en/prompts/"/>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://vibecodingclaude.com/es/openclaw/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vibecodingclaude.com/es/openclaw/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en/openclaw/"/>
+    <priority>0.8</priority>
+  </url>
 
   <!-- English Pages -->
   <url>
@@ -74,6 +80,12 @@
     <loc>https://vibecodingclaude.com/en/prompts/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://vibecodingclaude.com/es/prompts/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en/prompts/"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vibecodingclaude.com/en/openclaw/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://vibecodingclaude.com/es/openclaw/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vibecodingclaude.com/en/openclaw/"/>
     <priority>0.8</priority>
   </url>
 </urlset>

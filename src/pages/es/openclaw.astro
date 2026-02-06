@@ -1,0 +1,420 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Cómo configurar OpenClaw con Claude Pro en un VPS',
+  description: 'Guía completa para instalar y configurar OpenClaw, el asistente de IA autónomo de código abierto, en un VPS económico con Claude Pro.',
+  inLanguage: 'es',
+  totalTime: 'PT45M',
+  tool: [
+    { '@type': 'HowToTool', name: 'OpenClaw' },
+    { '@type': 'HowToTool', name: 'Docker' },
+    { '@type': 'HowToTool', name: 'VPS (DigitalOcean o similar)' },
+  ],
+};
+---
+
+<ContentLayout
+  title={`OpenClaw: Tu Asistente IA Personal | ${t.siteTitle}`}
+  description="Guía completa para instalar OpenClaw en un VPS económico con Claude Pro. Aprende a tener tu propio asistente de IA autónomo accesible desde WhatsApp, Telegram y más."
+  lang={lang}
+  currentPath="openclaw"
+  structuredData={structuredData}
+>
+  <h1>OpenClaw: Tu Asistente de IA Personal</h1>
+  <p class="lead">Configura tu propio agente de IA autónomo en un VPS económico, accesible desde WhatsApp, Telegram y más, usando tu suscripción de Claude Pro.</p>
+
+  <nav class="toc">
+    <h2>Contenido</h2>
+    <ul>
+      <li><a href="#que-es">¿Qué es OpenClaw?</a></li>
+      <li><a href="#ventajas">Ventajas de OpenClaw</a></li>
+      <li><a href="#requisitos">Requisitos</a></li>
+      <li><a href="#vps">Elegir un VPS</a></li>
+      <li><a href="#instalacion">Instalación paso a paso</a></li>
+      <li><a href="#claude-pro">Conectar con Claude Pro</a></li>
+      <li><a href="#mensajeria">Conectar plataforma de mensajería</a></li>
+      <li><a href="#seguridad">Seguridad y buenas prácticas</a></li>
+    </ul>
+  </nav>
+
+  <section id="que-es">
+    <h2>¿Qué es OpenClaw?</h2>
+
+    <p><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">OpenClaw</a> (antes conocido como Clawdbot y Moltbot) es un <strong>agente de IA autónomo, gratuito y de código abierto</strong> que funciona como tu asistente personal. A diferencia de usar Claude en el navegador, OpenClaw:</p>
+
+    <ul>
+      <li><strong>Vive en tus apps de mensajería</strong> - Habla con tu IA desde WhatsApp, Telegram, Discord, Slack, Signal, iMessage y más</li>
+      <li><strong>Ejecuta tareas en tu máquina</strong> - Puede leer/escribir archivos, ejecutar comandos, navegar la web</li>
+      <li><strong>Funciona de forma autónoma</strong> - Puedes programar tareas automáticas con cron jobs</li>
+      <li><strong>Recuerda todo</strong> - Tiene memoria persistente entre conversaciones</li>
+      <li><strong>Es auto-hospedado</strong> - Tú controlas tus datos, corre en tu propio servidor</li>
+    </ul>
+
+    <p>Es uno de los proyectos open-source de más rápido crecimiento, con más de <strong>145,000 estrellas en GitHub</strong>.</p>
+
+    <div class="callout">
+      <p><strong>En pocas palabras:</strong> Imagina tener a Claude disponible 24/7 desde tu WhatsApp, que puede ejecutar código, automatizar tareas y recordar tus preferencias. Eso es OpenClaw.</p>
+    </div>
+  </section>
+
+  <section id="ventajas">
+    <h2>Ventajas de OpenClaw</h2>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <h3>Conversación Natural</h3>
+        <p>Habla con tu IA desde las apps que ya usas. No necesitas abrir un navegador ni una terminal - simplemente envía un mensaje de WhatsApp.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>Siempre Disponible</h3>
+        <p>Al correr en un VPS, tu asistente está online 24/7. Puedes pedirle cosas a las 3 AM o programar tareas automáticas.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>Privacidad Total</h3>
+        <p>Tú controlas el servidor. Tus conversaciones y datos no pasan por terceros más allá del proveedor de IA que elijas.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>Automatización</h3>
+        <p>Programa tareas recurrentes: monitorear tu email, generar reportes, hacer backups, vigilar precios, y mucho más.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>Multi-Modelo</h3>
+        <p>No estás limitado a un solo modelo. Soporta Claude, GPT-4o, Gemini, DeepSeek, y modelos locales con Ollama.</p>
+      </div>
+
+      <div class="feature-item">
+        <h3>Extensible</h3>
+        <p>Sistema de "Skills" (plugins) que amplían las capacidades: automatización del navegador, gestión de calendario, revisión de código, y más.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="requisitos">
+    <h2>Requisitos</h2>
+
+    <p>Para seguir esta guía necesitas:</p>
+
+    <ol>
+      <li><strong>Una suscripción a Claude Pro</strong> ($20/mes) o Max ($100/mes) - <a href="/es/herramientas">ver planes</a></li>
+      <li><strong>Un VPS</strong> (servidor virtual) - desde $4-6/mes</li>
+      <li><strong>Una cuenta en una plataforma de mensajería</strong> - WhatsApp, Telegram, Discord, etc.</li>
+      <li><strong>Conocimientos básicos de terminal</strong> - saber ejecutar comandos (lo que has aprendido en esta guía)</li>
+    </ol>
+
+    <p><strong>Costo total mensual:</strong> ~$24-26/mes (Claude Pro + VPS económico)</p>
+  </section>
+
+  <section id="vps">
+    <h2>Elegir un VPS</h2>
+
+    <p>Un VPS (Virtual Private Server) es una computadora en la nube que está encendida 24/7. Para OpenClaw necesitas muy poco:</p>
+
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Proveedor</th>
+          <th>Precio/mes</th>
+          <th>RAM</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DigitalOcean</strong></td>
+          <td>$6</td>
+          <td>1 GB</td>
+          <td>1-Click deploy disponible para OpenClaw</td>
+        </tr>
+        <tr>
+          <td><strong>Hostinger</strong></td>
+          <td>$4-5</td>
+          <td>2 GB</td>
+          <td>Template Docker para OpenClaw</td>
+        </tr>
+        <tr>
+          <td><strong>Hetzner</strong></td>
+          <td>€4</td>
+          <td>2 GB</td>
+          <td>Excelente relación precio/rendimiento</td>
+        </tr>
+        <tr>
+          <td><strong>Vultr</strong></td>
+          <td>$5</td>
+          <td>1 GB</td>
+          <td>Muchas ubicaciones disponibles</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>Recomendación:</strong> Si es tu primera vez, <a href="https://www.digitalocean.com" target="_blank" rel="noopener">DigitalOcean</a> es la opción más fácil porque tiene un despliegue de 1-Click para OpenClaw. Si quieres ahorrar, <a href="https://www.hetzner.com" target="_blank" rel="noopener">Hetzner</a> ofrece más recursos por menos dinero.</p>
+    </div>
+
+    <h3>Requisitos mínimos del VPS</h3>
+
+    <ul>
+      <li><strong>Sistema operativo:</strong> Ubuntu 22.04 o 24.04 LTS</li>
+      <li><strong>RAM:</strong> 2 GB (mínimo 1 GB, recomendado 2 GB+)</li>
+      <li><strong>Disco:</strong> 10 GB o más</li>
+      <li><strong>CPU:</strong> 1 vCPU es suficiente</li>
+    </ul>
+  </section>
+
+  <section id="instalacion">
+    <h2>Instalación Paso a Paso</h2>
+
+    <p>Vamos a instalar OpenClaw usando Docker, que es el método más sencillo y recomendado para un VPS.</p>
+
+    <h3>1. Conectarse al VPS</h3>
+
+    <p>Abre tu terminal y conéctate a tu VPS por SSH:</p>
+
+    <CodeBlock
+      code={`ssh root@TU-IP-DEL-VPS`}
+      language="bash"
+      filename="Terminal (tu computadora)"
+    />
+
+    <h3>2. Instalar Docker</h3>
+
+    <CodeBlock
+      code={`# Actualizar el sistema
+apt update && apt upgrade -y
+
+# Instalar Docker
+curl -fsSL https://get.docker.com | sh
+
+# Verificar que Docker funciona
+docker --version`}
+      language="bash"
+      filename="Terminal (VPS)"
+    />
+
+    <h3>3. Instalar OpenClaw</h3>
+
+    <CodeBlock
+      code={`# Clonar el repositorio
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+
+# Ejecutar el script de instalación Docker
+docker compose up -d`}
+      language="bash"
+      filename="Terminal (VPS)"
+    />
+
+    <h3>4. Configuración inicial</h3>
+
+    <p>Una vez que OpenClaw está corriendo, accede a la interfaz de configuración:</p>
+
+    <CodeBlock
+      code={`# Abrir la interfaz de configuración interactiva
+docker exec -it openclaw npx openclaw`}
+      language="bash"
+      filename="Terminal (VPS)"
+    />
+
+    <p>Esto abrirá un asistente interactivo donde podrás:</p>
+
+    <ol>
+      <li>Seleccionar <strong>"QuickStart"</strong> para configuración rápida</li>
+      <li>Elegir tu proveedor de IA (Claude, GPT-4o, Gemini, etc.)</li>
+      <li>Conectar tu plataforma de mensajería</li>
+      <li>Activar "skills" (plugins) como acceso al sistema de archivos, navegador, etc.</li>
+    </ol>
+  </section>
+
+  <section id="claude-pro">
+    <h2>Conectar con Claude Pro</h2>
+
+    <p>OpenClaw puede usar tu suscripción de Claude Pro/Max directamente. Tienes dos opciones:</p>
+
+    <h3>Opción A: API Key de Anthropic (recomendada)</h3>
+
+    <p>La forma más estable y controlada:</p>
+
+    <ol>
+      <li>Ve a <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a></li>
+      <li>Crea una API Key en Settings → API Keys</li>
+      <li>En la configuración de OpenClaw, selecciona "Anthropic" como proveedor</li>
+      <li>Introduce tu API Key</li>
+    </ol>
+
+    <div class="callout callout-warning">
+      <p><strong>Nota sobre costos:</strong> La API de Anthropic se cobra por uso (tokens), separado de tu suscripción de Claude Pro. Si prefieres usar tu suscripción existente, mira la Opción B.</p>
+    </div>
+
+    <h3>Opción B: Claude Max API Proxy</h3>
+
+    <p>OpenClaw incluye un proxy que permite usar tu suscripción de Claude Max directamente:</p>
+
+    <ol>
+      <li>En la configuración de OpenClaw, selecciona <strong>"Claude Max API Proxy"</strong></li>
+      <li>Inicia sesión con tu cuenta de Anthropic</li>
+      <li>OpenClaw configurará automáticamente un daemon que mantiene la conexión</li>
+    </ol>
+
+    <div class="callout callout-warning">
+      <p><strong>Advertencia importante:</strong> Anthropic puede cancelar tu suscripción si detecta uso excesivo o automatizado a través del proxy. Cada acción del agente es una llamada a la API. Usa esta opción con moderación y monitorea tu uso.</p>
+    </div>
+  </section>
+
+  <section id="mensajeria">
+    <h2>Conectar Plataforma de Mensajería</h2>
+
+    <p>Esta es la parte divertida - conectar OpenClaw a la app de mensajería que usas todos los días.</p>
+
+    <h3>Telegram (la más fácil)</h3>
+
+    <ol>
+      <li>Abre Telegram y busca <strong>@BotFather</strong></li>
+      <li>Envía <code>/newbot</code> y sigue las instrucciones para crear un bot</li>
+      <li>Copia el token que te da BotFather</li>
+      <li>En la configuración de OpenClaw, selecciona "Telegram" y pega el token</li>
+      <li>Ahora puedes hablar con tu IA desde Telegram</li>
+    </ol>
+
+    <h3>WhatsApp</h3>
+
+    <ol>
+      <li>En la configuración de OpenClaw, selecciona "WhatsApp"</li>
+      <li>Escanea el código QR que aparece con tu teléfono</li>
+      <li>OpenClaw se conecta a WhatsApp Web y recibe tus mensajes</li>
+    </ol>
+
+    <h3>Discord</h3>
+
+    <ol>
+      <li>Ve al <a href="https://discord.com/developers/applications" target="_blank" rel="noopener">Portal de Desarrolladores de Discord</a></li>
+      <li>Crea una nueva aplicación y un bot</li>
+      <li>Copia el token del bot</li>
+      <li>En OpenClaw, selecciona "Discord" y pega el token</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>Otras plataformas:</strong> OpenClaw también soporta Slack, Signal, iMessage, Microsoft Teams, Google Chat y Matrix. Consulta la <a href="https://docs.openclaw.ai" target="_blank" rel="noopener">documentación oficial</a> para instrucciones de cada una.</p>
+    </div>
+  </section>
+
+  <section id="seguridad">
+    <h2>Seguridad y Buenas Prácticas</h2>
+
+    <p>OpenClaw es poderoso, pero darle acceso a un agente de IA a tu servidor requiere precauciones:</p>
+
+    <div class="callout callout-warning">
+      <p><strong>Importante:</strong> Investigadores de seguridad han identificado riesgos en OpenClaw. Sigue estas prácticas para proteger tu servidor y tus datos.</p>
+    </div>
+
+    <h3>Recomendaciones de seguridad</h3>
+
+    <ul>
+      <li><strong>Usa un VPS dedicado</strong> - No instales OpenClaw en tu computadora personal ni en un servidor con datos sensibles. Un VPS aislado de $5/mes es la mejor opción</li>
+      <li><strong>No des acceso root</strong> - Configura un usuario sin privilegios para OpenClaw</li>
+      <li><strong>Revisa los Skills</strong> - No instales skills de fuentes no verificadas. Se han encontrado skills maliciosos que roban credenciales</li>
+      <li><strong>Monitorea el uso de API</strong> - Los bucles de agente pueden generar costos inesperados. Configura límites de gasto en tu proveedor de IA</li>
+      <li><strong>Actualiza regularmente</strong> - Mantén OpenClaw y Docker actualizados</li>
+      <li><strong>Configura un firewall</strong> - Solo abre los puertos que necesites</li>
+    </ul>
+
+    <h3>Configurar firewall básico</h3>
+
+    <CodeBlock
+      code={`# Configurar UFW (firewall)
+ufw allow ssh
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable`}
+      language="bash"
+      filename="Terminal (VPS)"
+    />
+
+    <h3>Crear usuario sin privilegios</h3>
+
+    <CodeBlock
+      code={`# Crear usuario para OpenClaw
+adduser openclaw
+usermod -aG docker openclaw
+
+# Cambiar al nuevo usuario
+su - openclaw`}
+      language="bash"
+      filename="Terminal (VPS)"
+    />
+  </section>
+
+  <div class="callout">
+    <p><strong>Recursos adicionales:</strong></p>
+    <ul>
+      <li><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">GitHub - OpenClaw</a></li>
+      <li><a href="https://docs.openclaw.ai" target="_blank" rel="noopener">Documentación oficial</a></li>
+      <li><a href="https://docs.openclaw.ai/providers/claude-max-api-proxy" target="_blank" rel="noopener">Guía del Claude Max API Proxy</a></li>
+    </ul>
+  </div>
+
+  <div class="next-section">
+    <a href="/es/prompts" class="btn btn-primary btn-large">
+      Siguiente: Prompts y Tips →
+    </a>
+  </div>
+</ContentLayout>
+
+<style>
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .feature-item {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .feature-item h3 {
+    margin-top: 0;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+  }
+
+  .feature-item p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-lg) 0;
+  }
+
+  .pricing-table th,
+  .pricing-table td {
+    padding: var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pricing-table th {
+    background-color: var(--color-bg-secondary);
+    font-weight: 600;
+  }
+
+  .next-section {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+</style>
