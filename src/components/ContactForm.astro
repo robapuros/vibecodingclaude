@@ -36,27 +36,6 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     <p>{finalSubtitle}</p>
     
     <div class="options">
-      {showLeadCapture && (
-        <div class="option-card">
-          <div class="option-icon">📧</div>
-          <h3>{t.contact.leadCapture.title}</h3>
-          <p>{t.contact.leadCapture.description}</p>
-          <form action={formEndpoint} method="POST" class="interest-form">
-            <input type="hidden" name="_subject" value="Vibe Coding - Lead Capture Interest">
-            <input type="hidden" name="_next" value="https://vibecodingclaude.com/gracias">
-            <input type="hidden" name="service_type" value="lead_capture">
-            <input type="hidden" name="language" value={lang}>
-            <div class="form-group">
-              <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
-              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess"></div>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              {t.contact.leadCapture.button}
-            </button>
-          </form>
-        </div>
-      )}
-
       {showSetupService && (
         <div class="option-card featured">
           <div class="option-icon">⚡</div>
@@ -82,6 +61,27 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
             </div>
             <button type="submit" class="btn btn-primary btn-large">
               {t.contact.setupService.button}
+            </button>
+          </form>
+        </div>
+      )}
+
+      {showLeadCapture && (
+        <div class="option-card">
+          <div class="option-icon">📧</div>
+          <h3>{t.contact.leadCapture.title}</h3>
+          <p>{t.contact.leadCapture.description}</p>
+          <form action={formEndpoint} method="POST" class="interest-form">
+            <input type="hidden" name="_subject" value="Vibe Coding - Lead Capture Interest">
+            <input type="hidden" name="_next" value="https://vibecodingclaude.com/gracias">
+            <input type="hidden" name="service_type" value="lead_capture">
+            <input type="hidden" name="language" value={lang}>
+            <div class="form-group">
+              <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              {t.contact.leadCapture.button}
             </button>
           </form>
         </div>
