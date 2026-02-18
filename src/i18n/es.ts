@@ -96,7 +96,7 @@ export const es = {
       description: 'Te instalamos y configuramos OpenClaw completo en tu VPS en menos de 24h',
       features: [
         'Instalación completa en tu VPS',
-        'Conexión con Claude Pro',
+        'Conexión con Claude Pro o con la IA de tu elección',
         'WhatsApp + Telegram configurados',
         'Soporte post-instalación',
       ],
