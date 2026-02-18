@@ -1,5 +1,6 @@
 ---
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import { useTranslations } from '../../i18n/ui';
 
 const lang = 'en';
@@ -148,6 +149,12 @@ const structuredData = {
       </a>
     </div>
   </section>
+
+  <ContactForm 
+    showSetupService={false}
+    showLeadCapture={true}
+    lang="en"
+  />
 </ContentLayout>
 
 <style>

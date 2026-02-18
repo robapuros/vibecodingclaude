@@ -5,6 +5,7 @@ interface Props {
   title?: string;
   subtitle?: string;
   showSetupService?: boolean;
+  showLeadCapture?: boolean;
   lang?: string;
 }
 
@@ -12,6 +13,7 @@ const {
   title, 
   subtitle, 
   showSetupService = true,
+  showLeadCapture = true,
   lang = "es"
 } = Astro.props;
 
@@ -34,24 +36,26 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     <p>{finalSubtitle}</p>
     
     <div class="options">
-      <div class="option-card">
-        <div class="option-icon">📧</div>
-        <h3>{t.contact.leadCapture.title}</h3>
-        <p>{t.contact.leadCapture.description}</p>
-        <form action={formEndpoint} method="POST" class="interest-form">
-          <input type="hidden" name="_subject" value="Vibe Coding - Lead Capture Interest">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="service_type" value="lead_capture">
-          <input type="hidden" name="language" value={lang}>
-          <div class="form-group">
-            <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
-            <input type="text" name="name" placeholder={t.contact.placeholders.name} required>
-          </div>
-          <button type="submit" class="btn btn-primary">
-            {t.contact.leadCapture.button}
-          </button>
-        </form>
-      </div>
+      {showLeadCapture && (
+        <div class="option-card">
+          <div class="option-icon">📧</div>
+          <h3>{t.contact.leadCapture.title}</h3>
+          <p>{t.contact.leadCapture.description}</p>
+          <form action={formEndpoint} method="POST" class="interest-form">
+            <input type="hidden" name="_subject" value="Vibe Coding - Lead Capture Interest">
+            <input type="hidden" name="_next" value="https://vibecodingclaude.com/gracias">
+            <input type="hidden" name="service_type" value="lead_capture">
+            <input type="hidden" name="language" value={lang}>
+            <div class="form-group">
+              <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              {t.contact.leadCapture.button}
+            </button>
+          </form>
+        </div>
+      )}
 
       {showSetupService && (
         <div class="option-card featured">
@@ -66,15 +70,15 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
           </ul>
           <form action={formEndpoint} method="POST" class="service-form">
             <input type="hidden" name="_subject" value={`OPENCLAW SETUP SERVICE - Request ${price} ${currency}`}>
-            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://vibecodingclaude.com/gracias">
             <input type="hidden" name="service_type" value="openclaw_setup">
             <input type="hidden" name="service_price" value={priceValue}>
             <input type="hidden" name="currency" value={currency}>
             <input type="hidden" name="language" value={lang}>
             <div class="form-group">
               <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
-              <input type="text" name="name" placeholder={t.contact.placeholders.name} required>
               <textarea name="message" placeholder={t.contact.placeholders.message} rows="3"></textarea>
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
             </div>
             <button type="submit" class="btn btn-primary btn-large">
               {t.contact.setupService.button}
@@ -252,6 +256,10 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     background: var(--color-primary);
   }
 
+  .h-captcha {
+    margin: var(--space-md) 0;
+  }
+
   @media (max-width: 480px) {
     .options {
       grid-template-columns: 1fr;
@@ -265,12 +273,19 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
       font-size: 2rem;
     }
   }
+
+  .h-captcha {
+    margin: var(--space-md) 0;
+  }
 </style>
+
+<!-- hCaptcha Script -->
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
 <script>
   // Form submission handling
   document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('form[action*="formspree"]');
+    const forms = document.querySelectorAll('form[action*="formsubmit"]');
     
     forms.forEach(form => {
       form.addEventListener('submit', function(e) {
@@ -278,13 +293,15 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
         const originalText = button.textContent;
         
         button.disabled = true;
-        button.textContent = 'Enviando...';
+        button.textContent = button.textContent.includes('Solicitar') || button.textContent.includes('Request') ? 
+          (button.textContent.includes('Solicitar') ? 'Enviando...' : 'Sending...') : 
+          (button.textContent.includes('Quiero') ? 'Enviando...' : 'Sending...');
         
-        // Re-enable button after 3 seconds
+        // Re-enable button after 5 seconds
         setTimeout(() => {
           button.disabled = false;
           button.textContent = originalText;
-        }, 3000);
+        }, 5000);
       });
     });
   });

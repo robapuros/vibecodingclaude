@@ -1,6 +1,7 @@
 ---
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import { useTranslations } from '../../i18n/ui';
 
 const lang = 'es';
@@ -361,6 +362,12 @@ git push -u origin main`}
       </a>
     </div>
   </section>
+
+  <ContactForm 
+    showSetupService={false}
+    showLeadCapture={true}
+    lang="es"
+  />
 </ContentLayout>
 
 <style>

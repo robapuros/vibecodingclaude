@@ -1,5 +1,6 @@
 ---
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 import { useTranslations } from '../../i18n/ui';
 
@@ -421,6 +422,11 @@ claude "create a login component"`}
       <a href="/en/tools" class="btn btn-secondary btn-large">Set Up Tools</a>
     </div>
   </div>
+  <ContactForm 
+    showSetupService={false}
+    showLeadCapture={true}
+    lang="en"
+  />
 </ContentLayout>
 
 <style>
