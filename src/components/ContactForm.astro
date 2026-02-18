@@ -48,7 +48,7 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
             <input type="hidden" name="language" value={lang}>
             <div class="form-group">
               <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
-              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess"></div>
             </div>
             <button type="submit" class="btn btn-primary">
               {t.contact.leadCapture.button}
@@ -78,7 +78,7 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
             <div class="form-group">
               <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
               <textarea name="message" placeholder={t.contact.placeholders.message} rows="3"></textarea>
-              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"></div>
+              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess"></div>
             </div>
             <button type="submit" class="btn btn-primary btn-large">
               {t.contact.setupService.button}
@@ -256,10 +256,6 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     background: var(--color-primary);
   }
 
-  .h-captcha {
-    margin: var(--space-md) 0;
-  }
-
   @media (max-width: 480px) {
     .options {
       grid-template-columns: 1fr;
@@ -274,34 +270,68 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     }
   }
 
-  .h-captcha {
-    margin: var(--space-md) 0;
-  }
+  /* Invisible captcha - no styling needed */
 </style>
 
 <!-- hCaptcha Script -->
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
 <script>
-  // Form submission handling
+  let currentForm = null;
+  let currentButton = null;
+  let originalButtonText = '';
+
+  // Invisible captcha success callback
+  function onCaptchaSuccess(token) {
+    if (currentForm) {
+      // Add the token as a hidden field
+      const tokenInput = document.createElement('input');
+      tokenInput.type = 'hidden';
+      tokenInput.name = 'h-captcha-response';
+      tokenInput.value = token;
+      currentForm.appendChild(tokenInput);
+      
+      // Submit the form
+      currentForm.submit();
+    }
+  }
+
+  // Form submission handling with invisible captcha
   document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form[action*="formsubmit"]');
     
     forms.forEach(form => {
       form.addEventListener('submit', function(e) {
-        const button = form.querySelector('button[type="submit"]');
-        const originalText = button.textContent;
+        e.preventDefault(); // Always prevent default to handle captcha
         
+        const button = form.querySelector('button[type="submit"]');
+        const captcha = form.querySelector('.h-captcha');
+        
+        // Store form and button for callback
+        currentForm = form;
+        currentButton = button;
+        originalButtonText = button.textContent;
+        
+        // Update button state
         button.disabled = true;
         button.textContent = button.textContent.includes('Solicitar') || button.textContent.includes('Request') ? 
-          (button.textContent.includes('Solicitar') ? 'Enviando...' : 'Sending...') : 
-          (button.textContent.includes('Quiero') ? 'Enviando...' : 'Sending...');
+          (button.textContent.includes('Solicitar') ? 'Validando...' : 'Validating...') : 
+          (button.textContent.includes('Quiero') ? 'Validando...' : 'Validating...');
         
-        // Re-enable button after 5 seconds
+        // Execute invisible captcha
+        if (captcha && window.hcaptcha) {
+          const sitekey = captcha.getAttribute('data-sitekey');
+          window.hcaptcha.execute(sitekey);
+        } else {
+          // Fallback if no captcha
+          form.submit();
+        }
+        
+        // Reset button after timeout (in case of error)
         setTimeout(() => {
           button.disabled = false;
-          button.textContent = originalText;
-        }, 5000);
+          button.textContent = originalButtonText;
+        }, 10000);
       });
     });
   });
