@@ -1,0 +1,291 @@
+---
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  showSetupService?: boolean;
+  lang?: string;
+}
+
+const { 
+  title, 
+  subtitle, 
+  showSetupService = true,
+  lang = "es"
+} = Astro.props;
+
+const t = useTranslations(lang);
+const formEndpoint = "https://formsubmit.co/robapuros@gmail.com";
+
+// Use translations if title/subtitle not provided
+const finalTitle = title || t.contact.title;
+const finalSubtitle = subtitle || t.contact.subtitle;
+
+// Price and currency based on language
+const price = lang === 'en' ? '$120' : '€100';
+const priceValue = lang === 'en' ? '120' : '100';
+const currency = lang === 'en' ? 'USD' : 'EUR';
+---
+
+<section class="contact-form">
+  <div class="contact-container">
+    <h2>{finalTitle}</h2>
+    <p>{finalSubtitle}</p>
+    
+    <div class="options">
+      <div class="option-card">
+        <div class="option-icon">📧</div>
+        <h3>{t.contact.leadCapture.title}</h3>
+        <p>{t.contact.leadCapture.description}</p>
+        <form action={formEndpoint} method="POST" class="interest-form">
+          <input type="hidden" name="_subject" value="Vibe Coding - Lead Capture Interest">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="service_type" value="lead_capture">
+          <input type="hidden" name="language" value={lang}>
+          <div class="form-group">
+            <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
+            <input type="text" name="name" placeholder={t.contact.placeholders.name} required>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            {t.contact.leadCapture.button}
+          </button>
+        </form>
+      </div>
+
+      {showSetupService && (
+        <div class="option-card featured">
+          <div class="option-icon">⚡</div>
+          <div class="price-badge">{price}</div>
+          <h3>{t.contact.setupService.title}</h3>
+          <p>{t.contact.setupService.description}</p>
+          <ul class="service-features">
+            {t.contact.setupService.features.map((feature) => (
+              <li>✅ {feature}</li>
+            ))}
+          </ul>
+          <form action={formEndpoint} method="POST" class="service-form">
+            <input type="hidden" name="_subject" value={`OPENCLAW SETUP SERVICE - Request ${price} ${currency}`}>
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="service_type" value="openclaw_setup">
+            <input type="hidden" name="service_price" value={priceValue}>
+            <input type="hidden" name="currency" value={currency}>
+            <input type="hidden" name="language" value={lang}>
+            <div class="form-group">
+              <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
+              <input type="text" name="name" placeholder={t.contact.placeholders.name} required>
+              <textarea name="message" placeholder={t.contact.placeholders.message} rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large">
+              {t.contact.setupService.button}
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-form {
+    padding: var(--space-3xl) 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+  }
+
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    text-align: center;
+  }
+
+  .contact-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .contact-container > p {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+
+  .option-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    border: 2px solid transparent;
+  }
+
+  .option-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .option-card.featured {
+    border-color: var(--color-primary);
+    position: relative;
+  }
+
+  .option-card.featured::before {
+    content: "POPULAR";
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: var(--color-primary);
+    color: white;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 12px;
+  }
+
+  .option-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .price-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .option-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-text);
+  }
+
+  .option-card > p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .service-features {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .service-features li {
+    padding: 4px 0;
+    color: var(--color-text-muted);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 16px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+  }
+
+  .btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-large {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+  }
+
+  @media (max-width: 480px) {
+    .options {
+      grid-template-columns: 1fr;
+    }
+    
+    .option-card {
+      padding: var(--space-xl);
+    }
+    
+    .contact-container h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Form submission handling
+  document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form[action*="formspree"]');
+    
+    forms.forEach(form => {
+      form.addEventListener('submit', function(e) {
+        const button = form.querySelector('button[type="submit"]');
+        const originalText = button.textContent;
+        
+        button.disabled = true;
+        button.textContent = 'Enviando...';
+        
+        // Re-enable button after 3 seconds
+        setTimeout(() => {
+          button.disabled = false;
+          button.textContent = originalText;
+        }, 3000);
+      });
+    });
+  });
+</script>

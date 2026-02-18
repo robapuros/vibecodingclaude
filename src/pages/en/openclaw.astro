@@ -1,6 +1,7 @@
 ---
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import { useTranslations } from '../../i18n/ui';
 
 const lang = 'en';
@@ -194,7 +195,7 @@ const structuredData = [
         </tr>
         <tr>
           <td><strong>Hetzner</strong></td>
-          <td>€4</td>
+          <td>$4.50</td>
           <td>2 GB</td>
           <td>Excellent price/performance ratio</td>
         </tr>
@@ -446,6 +447,11 @@ su - openclaw`}
       Next: Prompts & Tips →
     </a>
   </div>
+
+  <ContactForm 
+    showSetupService={true}
+    lang="en"
+  />
 </ContentLayout>
 
 <style>

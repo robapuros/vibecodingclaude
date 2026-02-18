@@ -74,6 +74,33 @@ export const en = {
     english: 'English',
   },
 
+  // Contact Form
+  contact: {
+    title: 'Interested?',
+    subtitle: 'Stay updated or request our professional setup service',
+    leadCapture: {
+      title: 'Get Updates',
+      description: 'We\'ll notify you about new guides, tools and vibe coding content',
+      button: 'Get Updates',
+    },
+    setupService: {
+      title: 'OpenClaw Setup Service',
+      description: 'We install and configure complete OpenClaw on your VPS in less than 24h',
+      features: [
+        'Complete VPS installation',
+        'Claude Pro connection',
+        'WhatsApp + Telegram configured',
+        'Post-installation support',
+      ],
+      button: 'Request Service - $120',
+    },
+    placeholders: {
+      email: 'your@email.com',
+      name: 'Your name',
+      message: 'Tell us about your project and any specific requirements...',
+    },
+  },
+
   // Common
   common: {
     next: 'Next',
