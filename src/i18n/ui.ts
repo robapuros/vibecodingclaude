@@ -37,6 +37,7 @@ export function getAlternateUrls(currentPath: string): { es: string; en: string 
     '/primera-app': '/first-app',
     '/first-app': '/primera-app',
     '/prompts': '/prompts',
+    '/markdown': '/markdown',
     '/openclaw': '/openclaw',
     '': '',
     '/': '/',
@@ -61,6 +62,7 @@ export function getLocalizedPath(path: string, lang: Lang): string {
     'first-app': { es: 'primera-app', en: 'first-app' },
     'primera-app': { es: 'primera-app', en: 'first-app' },
     prompts: { es: 'prompts', en: 'prompts' },
+    markdown: { es: 'markdown', en: 'markdown' },
     openclaw: { es: 'openclaw', en: 'openclaw' },
   };
 

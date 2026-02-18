@@ -1,0 +1,440 @@
+---
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t.markdown.title,
+  description: t.markdown.metaDescription,
+  inLanguage: 'en',
+  author: {
+    '@type': 'Organization',
+    name: 'Vibe Coding with Claude',
+  },
+};
+
+const readmeExample = `# My Vibe Coding Project
+
+## 📝 Description
+A personal task management web application built with vibe coding.
+
+## 🎯 Features
+- ✅ Create, edit, and delete tasks
+- ⏰ Reminders and due dates  
+- 📱 Responsive interface
+- 💾 Local storage
+
+## 🚀 Technologies
+- HTML5, CSS3, JavaScript
+- LocalStorage for persistence
+- Bootstrap for styling
+
+## 📋 TODO
+- [ ] Add task categories
+- [ ] Export tasks to PDF
+- [ ] Cloud synchronization
+- [x] Responsive design ✓
+
+## 🔧 Installation
+1. Clone the repository
+2. Open \`index.html\` in your browser
+3. Ready to use!
+
+## 📞 Support
+If you need help, contact [your@email.com]`;
+
+const changelogExample = `# Changelog
+
+## [1.2.0] - 2026-02-18
+### Added
+- New task search functionality
+- Dark/light theme toggle
+
+### Fixed  
+- Bug when editing long tasks
+- Date issues in Safari
+
+## [1.1.0] - 2026-02-15
+### Added
+- Email reminders
+- Priority filters
+
+### Changed
+- Improved mobile interface`;
+
+const contextExample = `# CONTEXT.md
+
+## 🎯 Project Goal
+Create a simple and effective task management application for university students.
+
+## 👥 Target User
+- Students aged 18-25
+- Need to organize assignments, exams, projects
+- Prefer simple and fast tools
+- Primarily use mobile devices
+
+## 🎨 Visual Style
+- Minimalist and clean
+- Colors: blue (#2563eb) as primary
+- Typography: Inter or similar
+- Icons: Heroicons or Feather
+
+## ⚡ Technical Requirements
+- Must work offline
+- Fast loading (< 2 seconds)  
+- Compatible with iOS Safari and Chrome
+- No heavy external dependencies
+
+## 🚫 Limitations
+- No login/registration needed
+- No backend required for now
+- Budget: $0 (free tools only)`;
+---
+
+<ContentLayout
+  title={`${t.markdown.title} | ${t.siteTitle}`}
+  description={t.markdown.metaDescription}
+  lang={lang}
+  currentPath="markdown"
+  structuredData={structuredData}
+>
+  <h1>.MD Files for Beginners</h1>
+  <p class="lead">Why Markdown files are essential for efficient vibe coding</p>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ul>
+      <li><a href="#what-are">What are .MD files?</a></li>
+      <li><a href="#why-important">Why are they important for Claude?</a></li>
+      <li><a href="#essential-files">Essential .MD files</a></li>
+      <li><a href="#best-practices">Best practices</a></li>
+      <li><a href="#examples">Practical examples</a></li>
+    </ul>
+  </nav>
+
+  <section id="what-are">
+    <h2>What are .MD files?</h2>
+
+    <p><strong>Markdown (.md)</strong> is a lightweight markup language that allows you to format text simply using symbols like <code>#</code>, <code>*</code>, <code>-</code>, etc.</p>
+
+    <div class="callout">
+      <p><strong>Why Markdown?</strong> It's readable by both humans and machines. Claude can perfectly understand the content and structure of your .MD files.</p>
+    </div>
+
+    <h3>Basic Markdown syntax</h3>
+    
+    <CodeBlock language="markdown" code={`# Main title
+## Subtitle  
+### Level 3 heading
+
+**Bold text**
+*Italic text*
+
+- Bulleted list
+- Second item
+
+1. Numbered list
+2. Second item
+
+[Link](https://example.com)
+
+\`inline code\`
+
+\`\`\`javascript
+// Code block
+const message = "Hello world!";
+\`\`\`
+
+> Quote or important note`} />
+
+    <p>With this simple syntax you can create clear and well-structured documentation.</p>
+  </section>
+
+  <section id="why-important">
+    <h2>Why are they important for Claude Code?</h2>
+
+    <p>.MD files are <strong>crucial</strong> for Claude to understand your project. They act as your application's "brain":</p>
+
+    <div class="benefits-grid">
+      <div class="benefit">
+        <h3>🧠 Project context</h3>
+        <p>Claude reads your .MD files to understand what you're building, for whom, and with what constraints.</p>
+      </div>
+
+      <div class="benefit">
+        <h3>📋 Clear requirements</h3>
+        <p>Documenting features, visual style, and technical requirements allows Claude to generate more precise code.</p>
+      </div>
+
+      <div class="benefit">
+        <h3>🎯 Consistent decisions</h3>
+        <p>With clear documentation, Claude makes design and architecture decisions consistent with your vision.</p>
+      </div>
+
+      <div class="benefit">
+        <h3>🔄 Efficient iteration</h3>
+        <p>When modifying .MD files, Claude automatically adapts the code while maintaining coherence.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-success">
+      <p><strong>Golden rule:</strong> Always document before coding. 5 minutes writing a good README.md will save you hours of corrections.</p>
+    </div>
+  </section>
+
+  <section id="essential-files">
+    <h2>Essential .MD files for your project</h2>
+
+    <div class="file-types">
+      <div class="file-type">
+        <h3>📖 README.md</h3>
+        <p><strong>The most important.</strong> Describes what your project does, how to install and use it.</p>
+        <p><strong>Claude reads it first</strong> to understand the general context.</p>
+      </div>
+
+      <div class="file-type">
+        <h3>📝 TODO.md</h3>
+        <p>List of pending tasks, features to implement, and known bugs.</p>
+        <p>Helps Claude prioritize and plan development.</p>
+      </div>
+
+      <div class="file-type">
+        <h3>📅 CHANGELOG.md</h3>
+        <p>Project change history. What was added, changed, or fixed in each version.</p>
+        <p>Claude uses it to understand the project's evolution.</p>
+      </div>
+
+      <div class="file-type">
+        <h3>🎯 CONTEXT.md</h3>
+        <p>Specific information about target users, constraints, design decisions.</p>
+        <p>Crucial context for Claude to make the right decisions.</p>
+      </div>
+
+      <div class="file-type">
+        <h3>⚙️ SETUP.md</h3>
+        <p>Detailed project installation and configuration instructions.</p>
+        <p>Especially useful for complex projects with multiple dependencies.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="best-practices">
+    <h2>Best practices</h2>
+
+    <div class="tips-grid">
+      <div class="tip">
+        <h3>✅ Be specific</h3>
+        <p>Instead of "make a pretty website", write "minimalist design with blue (#2563eb) and gray (#6b7280) colors".</p>
+      </div>
+
+      <div class="tip">
+        <h3>📱 Mention platforms</h3>
+        <p>Specify if it's web, mobile, desktop. Claude will optimize code for each platform.</p>
+      </div>
+
+      <div class="tip">
+        <h3>👥 Describe users</h3>
+        <p>Age, technical knowledge, devices they use. Claude will adapt the UX accordingly.</p>
+      </div>
+
+      <div class="tip">
+        <h3>🚫 Include limitations</h3>
+        <p>Budget, time, technologies you DON'T want to use. Avoids irrelevant proposals.</p>
+      </div>
+
+      <div class="tip">
+        <h3>📊 Prioritize features</h3>
+        <p>Mark what's essential, important, or "nice to have". Claude will focus efforts correctly.</p>
+      </div>
+
+      <div class="tip">
+        <h3>🔄 Keep updated</h3>
+        <p>.MD files should reflect the current project state. Update them regularly!</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Pro tip:</strong> Use emojis in your .MD titles. They not only look better, they also help Claude understand context quickly (🎯 = goal, 🚫 = limitation, etc.)</p>
+    </div>
+  </section>
+
+  <section id="examples">
+    <h2>Practical examples</h2>
+
+    <h3>Example 1: Complete README.md</h3>
+    <CodeBlock language="markdown" code={readmeExample} />
+
+    <h3>Example 2: CHANGELOG.md</h3>
+    <CodeBlock language="markdown" code={changelogExample} />
+
+    <h3>Example 3: CONTEXT.md</h3>
+    <CodeBlock language="markdown" code={contextExample} />
+
+    <div class="next-steps">
+      <h3>Next steps</h3>
+      <ol>
+        <li>Create a README.md for your next project before writing code</li>
+        <li>Add a TODO.md with the features you want to implement</li>
+        <li>Experiment with Claude Code: you'll see the difference good documentation makes</li>
+        <li>Keep your .MD files updated as the project evolves</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-success">
+      <p><strong>You're ready!</strong> With this knowledge about .MD files, Claude will understand your projects much better and generate more precise and useful code.</p>
+    </div>
+
+    <div class="next-section">
+      <a href="/en/openclaw" class="btn btn-primary btn-large">
+        Next: OpenClaw →
+      </a>
+    </div>
+  </section>
+
+  <ContactForm 
+    showSetupService={false}
+    showLeadCapture={true}
+    lang="en"
+  />
+</ContentLayout>
+
+<style>
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .benefit {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .benefit h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+
+  .benefit p {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  .file-types {
+    display: grid;
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .file-type {
+    padding: var(--space-lg);
+    border-left: 4px solid var(--color-primary);
+    background-color: var(--color-bg-secondary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .file-type h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+  }
+
+  .file-type p {
+    margin-bottom: var(--space-sm);
+  }
+
+  .file-type p:last-child {
+    margin-bottom: 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .tip {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+  }
+
+  .tip h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .tip p {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+
+  .next-steps {
+    margin: var(--space-2xl) 0;
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: var(--radius-lg);
+  }
+
+  .next-steps h3 {
+    margin-top: 0;
+  }
+
+  .next-steps ol {
+    margin-bottom: 0;
+  }
+
+  .next-steps li {
+    margin-bottom: var(--space-sm);
+  }
+
+  .next-section {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+
+  .toc {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .toc h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-md);
+  }
+
+  .toc ul {
+    margin: 0;
+    padding-left: var(--space-lg);
+  }
+
+  .toc a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .benefits-grid,
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

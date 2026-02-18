@@ -10,6 +10,7 @@ export const en = {
     tools: 'Tools',
     firstApp: 'First App',
     prompts: 'Prompts',
+    markdown: '.MD Files',
     openclaw: 'OpenClaw',
   },
 
@@ -58,6 +59,13 @@ export const en = {
     title: 'Prompts & Tips',
     description: 'Learn to write effective prompts for vibe coding.',
     metaDescription: 'Vibe coding prompt examples, reusable templates, and tips for communicating effectively with Claude.',
+  },
+
+  // Markdown Page
+  markdown: {
+    title: '.MD Files for Beginners',
+    description: 'Complete guide to Markdown files and their importance in Claude Code.',
+    metaDescription: 'Learn what .MD files are, how to use them with Claude Code, and why they are essential for efficient vibe coding.',
   },
 
   // Footer
