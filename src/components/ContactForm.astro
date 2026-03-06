@@ -57,7 +57,6 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
             <div class="form-group">
               <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
               <textarea name="message" placeholder={t.contact.placeholders.message} rows="3"></textarea>
-              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess" data-error-callback="onCaptchaError" data-expired-callback="onCaptchaExpired"></div>
             </div>
             <button type="submit" class="btn btn-primary btn-large">
               {t.contact.setupService.button}
@@ -78,7 +77,6 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
             <input type="hidden" name="language" value={lang}>
             <div class="form-group">
               <input type="email" name="email" placeholder={t.contact.placeholders.email} required>
-              <div class="h-captcha" data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2" data-size="invisible" data-callback="onCaptchaSuccess" data-error-callback="onCaptchaError" data-expired-callback="onCaptchaExpired"></div>
             </div>
             <button type="submit" class="btn btn-primary">
               {t.contact.leadCapture.button}
@@ -270,102 +268,33 @@ const currency = lang === 'en' ? 'USD' : 'EUR';
     }
   }
 
-  /* Invisible captcha - no styling needed */
 </style>
 
-<!-- hCaptcha Script -->
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-
-<script is:inline>
-  // Make these globally available for hCaptcha callback
-  window.currentForm = null;
-  window.currentButton = null;
-  window.originalButtonText = '';
-
-  // Global callback for invisible captcha
-  window.onCaptchaSuccess = function(token) {
-    console.log('Captcha success, submitting form...');
-    if (window.currentForm) {
-      // Add the token as a hidden field
-      const tokenInput = document.createElement('input');
-      tokenInput.type = 'hidden';
-      tokenInput.name = 'h-captcha-response';
-      tokenInput.value = token;
-      window.currentForm.appendChild(tokenInput);
-      
-      // Submit the form
-      window.currentForm.submit();
-    }
-  };
-
-  // Error callback
-  window.onCaptchaError = function(error) {
-    console.error('Captcha error:', error);
-    if (window.currentButton) {
-      window.currentButton.disabled = false;
-      window.currentButton.textContent = window.originalButtonText;
-      alert('Captcha verification failed. Please try again.');
-    }
-  };
-
-  // Expired callback
-  window.onCaptchaExpired = function() {
-    console.log('Captcha expired');
-    if (window.currentButton) {
-      window.currentButton.disabled = false;
-      window.currentButton.textContent = window.originalButtonText;
-    }
-  };
-</script>
-
 <script>
-  // Form submission handling with invisible captcha
+  // Simple form submission handler with button feedback
   document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form[action*="formsubmit"]');
     
     forms.forEach(form => {
       form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Always prevent default to handle captcha
-        
         const button = form.querySelector('button[type="submit"]');
-        const captcha = form.querySelector('.h-captcha');
         
-        // Store form and button globally for callback
-        window.currentForm = form;
-        window.currentButton = button;
-        window.originalButtonText = button.textContent;
-        
-        // Update button state
-        button.disabled = true;
-        button.textContent = button.textContent.includes('Solicitar') || button.textContent.includes('Request') ? 
-          (button.textContent.includes('Solicitar') ? 'Validando...' : 'Validating...') : 
-          (button.textContent.includes('Quiero') ? 'Validando...' : 'Validating...');
-        
-        // Execute invisible captcha
-        if (captcha && typeof window.hcaptcha !== 'undefined') {
-          try {
-            const sitekey = captcha.getAttribute('data-sitekey');
-            console.log('Executing hCaptcha with sitekey:', sitekey);
-            window.hcaptcha.execute({ async: true });
-          } catch (error) {
-            console.error('hCaptcha execution error:', error);
-            // Fallback: submit without captcha
-            form.submit();
-          }
-        } else {
-          console.log('hCaptcha not loaded, submitting form directly');
-          // Fallback if captcha not loaded
-          form.submit();
+        if (button) {
+          // Update button state
+          button.disabled = true;
+          const originalText = button.textContent;
+          button.textContent = button.textContent.includes('Solicitar') || button.textContent.includes('Request') ? 
+            (button.textContent.includes('Solicitar') ? 'Enviando...' : 'Sending...') : 
+            (button.textContent.includes('Quiero') ? 'Enviando...' : 'Sending...');
+          
+          // Re-enable after timeout (in case FormSubmit captcha is cancelled)
+          setTimeout(() => {
+            button.disabled = false;
+            button.textContent = originalText;
+          }, 30000);
         }
         
-        // Reset button after timeout (in case of error)
-        setTimeout(() => {
-          if (button.disabled) {
-            button.disabled = false;
-            button.textContent = window.originalButtonText;
-            console.log('Form submission timeout - please try again');
-          }
-        }, 15000);
+        // Let the form submit naturally to FormSubmit
       });
     });
   });
